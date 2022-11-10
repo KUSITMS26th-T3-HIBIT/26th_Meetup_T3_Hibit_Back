@@ -58,6 +58,7 @@ jobs:
           docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/hibit .
           docker build -f ./nginx/Dockerfile -t ${{ secrets.DOCKER_REPO }}/hibit-ngnix .
           docker push ${{ secrets.DOCKER_REPO }}/hibit
+          docker push ${{ secrets.DOCKER_REPO }}/hibit-ngnix
 
 
     ## deploy to production
