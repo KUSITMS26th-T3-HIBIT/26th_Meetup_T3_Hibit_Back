@@ -97,6 +97,9 @@ jobs:
   action-slack:
     needs: CI-CD
     runs-on: ubuntu-latest
+    permissions:
+        contents: read
+        actions: read
     steps:
         - name: Slack Alarm
           uses: 8398a7/action-slack@v3
