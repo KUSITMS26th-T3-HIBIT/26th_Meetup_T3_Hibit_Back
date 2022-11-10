@@ -42,6 +42,10 @@ jobs:
           touch ./application-database.properties
           echo "${{ secrets.DATABASE }}" > ./application-database.properties
       shell: bash
+      
+    ## permission change
+    - name: Change gradlew permissions
+      run: chmod +x ./gradlew
 
     ## gradle build
     - name: Build with Gradle
