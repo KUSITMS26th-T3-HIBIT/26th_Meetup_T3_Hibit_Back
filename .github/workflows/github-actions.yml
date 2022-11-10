@@ -40,7 +40,7 @@ jobs:
       run: |
           cd ./src/main/resources
           touch ./application-database.properties
-          echo "${{ secret.DATABASE }}" > ./application-database.properties
+          echo "${{ secrets.DATABASE }}" > ./application-database.properties
       shell: bash
 
     ## gradle build
