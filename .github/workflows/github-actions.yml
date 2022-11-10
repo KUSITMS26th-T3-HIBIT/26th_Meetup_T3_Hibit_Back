@@ -56,7 +56,7 @@ jobs:
       run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/hibit .
-          docker build -f Dockerfile-nginx -t ${{ secrets.DOCKER_REPO }}/hibit-ngnix .
+          docker build -f ./nginx/Dockerfile -t ${{ secrets.DOCKER_REPO }}/hibit-ngnix .
           docker push ${{ secrets.DOCKER_REPO }}/hibit
 
 
