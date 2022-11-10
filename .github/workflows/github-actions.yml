@@ -45,7 +45,7 @@ jobs:
 
     ## gradle build
     - name: Build with Gradle
-      run: ./gradlew build -x test -x ktlintCheck -x ktlintTestSourceSetCheck -x ktlintMainSourceSetCheck -x ktlintKotlinScriptCheck
+      run: ./gradlew bootJar
 
     ## docker build & push to production
     - name: Docker build & push to prod
