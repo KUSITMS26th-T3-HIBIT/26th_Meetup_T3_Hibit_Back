@@ -71,7 +71,7 @@ jobs:
               sudo docker rm -f $(docker ps -qa)
               sudo docker pull ${{ secrets.DOCKER_REPO }}/hibit
               sudo docker pull ${{ secrets.DOCKER_REPO }}/hibit-ngnix
-              docker-compose up -d
+              docker-compose -f ../docker-compose.yml up -d
               docker image prune -f
 
   ## time
