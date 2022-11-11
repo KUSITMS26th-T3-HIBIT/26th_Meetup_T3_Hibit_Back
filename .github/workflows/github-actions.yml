@@ -66,6 +66,7 @@ jobs:
       with:
           host: ${{ secrets.HOST}}
           username: ec2-user
+          envs: GITHUB_SHA
           key: ${{ secrets.KEY }}
           script: |
               sudo docker rm -f $(docker ps -qa)
