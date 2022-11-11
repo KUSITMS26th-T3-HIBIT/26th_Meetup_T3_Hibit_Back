@@ -8,7 +8,7 @@ public class Sample {
 
     @RequestMapping("/sample")
     public String greeting(){
-        return "sample!!";
+        return "드디어드디어ㅠㅜㅜㅜㅜ";
     }
 
 }
