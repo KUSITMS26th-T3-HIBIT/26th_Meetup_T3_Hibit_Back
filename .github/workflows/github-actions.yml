@@ -56,7 +56,9 @@ jobs:
       run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/hibit .
+          docker build -f ./nginx/Dockerfile -t ${{ secrets.DOCKER_REPO }}/hibit_nginx_1 .
           docker push ${{ secrets.DOCKER_REPO }}/hibit
+          docker push ${{ secrets.DOCKER_REPO }}/hibit_nignx_1
 
 
     ## deploy to production
@@ -71,6 +73,7 @@ jobs:
           script: |
               sudo docker rm -f $(docker ps -qa)
               sudo docker pull ${{ secrets.DOCKER_REPO }}/hibit
+              sudo docker pull ${{ secrets.DOCKER_REPO }}/hibit_nginx_1
               docker-compose up -d
               docker image prune -f
 
