@@ -34,7 +34,6 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-
 
-      if: contains(github.ref, 'develop')
     ## create application-database.properties
     - name: make application-database.properties
       run: |
@@ -61,7 +60,7 @@ jobs:
           docker push ${{ secrets.DOCKER_REPO }}/hibit_nginx_1
 
 
-    ## deploy to production
+    ## deploy to productionhibitdb
     - name: Deploy to prod
       uses: appleboy/ssh-action@master
       id: deploy-prod
