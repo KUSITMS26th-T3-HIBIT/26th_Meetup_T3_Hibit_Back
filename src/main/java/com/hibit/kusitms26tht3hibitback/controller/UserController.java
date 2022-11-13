@@ -1,6 +1,6 @@
 package com.hibit.kusitms26tht3hibitback.controller;
 
-import com.hibit.kusitms26tht3hibitback.domain.User;
+import com.hibit.kusitms26tht3hibitback.domain.Users;
 import com.hibit.kusitms26tht3hibitback.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +16,9 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(method = RequestMethod.POST, path = "/sign-up")
-    public User register(@RequestBody User user) {
+    public Users register(@RequestBody Users users) {
 
-        return userService.insertUser(user);
+        return userService.insertUser(users);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/sign-up/{id}")
