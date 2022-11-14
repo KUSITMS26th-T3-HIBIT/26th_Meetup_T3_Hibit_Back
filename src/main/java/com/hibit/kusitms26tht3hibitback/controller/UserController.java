@@ -1,19 +1,29 @@
 package com.hibit.kusitms26tht3hibitback.controller;
 
 import com.hibit.kusitms26tht3hibitback.domain.Users;
+import com.hibit.kusitms26tht3hibitback.global.jwt.JwtTokenProvider;
+import com.hibit.kusitms26tht3hibitback.repository.UserRepository;
 import com.hibit.kusitms26tht3hibitback.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @RequestMapping(method = RequestMethod.POST, path = "/sign-up")
     public Users register(@RequestBody Users users) {
@@ -33,5 +43,18 @@ public class UserController {
             response.put("reason", "이미 존재하는 아이디입니다..");
         }
         return response;
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody Map<String, String> user){
+        log.info("user id = {}", user.get("id"));
+        Users member = userRepository.findById(user.get("id"))
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 아이디입니다."));
+
+        if(member==null || !member.getPassword().equals(user.get("password"))){
+            return String.valueOf(new IllegalArgumentException("비밀번호가 일치하지 않습니다."));
+        }
+
+        return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
     }
 }
