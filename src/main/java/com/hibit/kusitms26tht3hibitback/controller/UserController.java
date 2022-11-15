@@ -1,6 +1,6 @@
 package com.hibit.kusitms26tht3hibitback.controller;
 
-import com.hibit.kusitms26tht3hibitback.domain.User;
+import com.hibit.kusitms26tht3hibitback.domain.Users;
 import com.hibit.kusitms26tht3hibitback.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,10 +20,11 @@ public class UserController {
 
     @Operation(summary = "sign-in/up", description = "회원가입 로그인")
     @RequestMapping(method = RequestMethod.POST, path = "/sign-up")
+    
     @PostMapping("/posts")
-    public User register(@RequestBody User user) {
+    public Users register(@RequestBody Users users) {
 
-        return userService.insertUser(user);
+        return userService.insertUser(users);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/sign-up/{id}")
