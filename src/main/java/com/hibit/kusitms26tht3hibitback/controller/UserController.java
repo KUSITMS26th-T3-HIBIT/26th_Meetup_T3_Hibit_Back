@@ -5,13 +5,17 @@ import com.hibit.kusitms26tht3hibitback.global.jwt.JwtTokenProvider;
 import com.hibit.kusitms26tht3hibitback.repository.UserRepository;
 import com.hibit.kusitms26tht3hibitback.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+
 @Slf4j
+@Tag(name="user", description = "회원가입/로그인 API")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -19,12 +23,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    @Operation(summary = "sign-in/up", description = "회원가입")
     @RequestMapping(method = RequestMethod.POST, path = "/sign-up")
     public Users register(@RequestBody Users users) {
 
