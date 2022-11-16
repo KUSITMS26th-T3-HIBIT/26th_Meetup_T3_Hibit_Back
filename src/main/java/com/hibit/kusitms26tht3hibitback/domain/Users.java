@@ -28,7 +28,7 @@ public class Users implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idx;
 
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false, length = 15, unique = true)
     @Schema(description = "아이디", example = "arin123")
     private String id;
 
@@ -44,13 +44,17 @@ public class Users implements UserDetails {
     @Schema(description = "전화번호", example = "01011112222")
     private String phone_number;
 
-    @Column(nullable = false, length = 2)
-    @Schema(description = "나이", example = "24")
-    private int age;
+    @Column(nullable = false, length = 8)
+    @Schema(description = "생년월일")
+    private String birth;
 
     @Column(nullable = false)
     @Schema(description = "성별", example = "True")
     private boolean gender;
+
+    @Column(nullable = false)
+    @Schema(description = "이메일")
+    private String email;
 
     @Column(nullable = true)
     private double temperature;
@@ -62,6 +66,18 @@ public class Users implements UserDetails {
     @Column(nullable = false, length = 100)
     @Schema(description = "자기소개", example = "안녕")
     private String introduce;
+
+    @Column(nullable = false)
+    @Schema(description = "관람 스타일")
+    private int style;
+
+    @ElementCollection
+    @Schema(description = "성격")
+    private List<Integer> personality;
+
+    @ElementCollection
+    @Schema(description = "취미")
+    private List<Integer> hobby;
 
     @Column
     private String admin="USER";
