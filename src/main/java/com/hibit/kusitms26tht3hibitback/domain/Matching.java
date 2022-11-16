@@ -2,15 +2,10 @@ package com.hibit.kusitms26tht3hibitback.domain;
 
 import com.hibit.kusitms26tht3hibitback.BaseTimeEntity;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.text.DateFormat;
 import java.time.LocalDateTime;
 
 @Getter
@@ -60,11 +55,14 @@ public class Matching extends BaseTimeEntity {
     @Column(nullable = false, length = 500)
     private String want;
 
+    @Column(nullable = true)
+    private char deleteYn;
+
     @Builder
     public Matching(Users user, String title, String exhibition, String content, int number,
                     LocalDateTime start_date,LocalDateTime finish_date, LocalDateTime end_date,
-                    boolean end, int view, String openchat, String want){
-        this.user= user;
+                    boolean end, int view, String openchat, String want) {
+        this.user = user;
         this.title = title;
         this.exhibition = exhibition;
         this.content = content;
@@ -75,6 +73,25 @@ public class Matching extends BaseTimeEntity {
         this.end = end;
         this.view = view;
         this.openchat = openchat;
-        this.want=want;
+        this.want = want;
+    }
+    public void update(String title, String exhibition, String content, int number,
+                       LocalDateTime start_date, LocalDateTime finish_date, LocalDateTime end_date,
+                       String openchat, String want) {
+        this.title = title;
+        this.exhibition = exhibition;
+        this.content = content;
+        this.number = number;
+        this.start_date = start_date;
+        this.finish_date = finish_date;
+        this.end_date = end_date;
+        this.openchat = openchat;
+        this.want = want;
+    }
+    public void increaseView(){
+        this.view++;
+    }
+    public void delete(){
+        this.deleteYn = 'Y';
     }
 }

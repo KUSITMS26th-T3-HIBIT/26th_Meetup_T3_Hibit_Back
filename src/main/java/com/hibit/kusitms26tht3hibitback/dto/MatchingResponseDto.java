@@ -22,6 +22,7 @@ public class MatchingResponseDto {
     private int view;
     private String openchat;
     private String want;
+    private char deleteYn;
 
     public MatchingResponseDto(Matching matching){
         this.idx= matching.getIdx();
@@ -37,6 +38,7 @@ public class MatchingResponseDto {
         this.view=matching.getView();
         this.openchat=matching.getOpenchat();
         this.want=matching.getWant();
+        this.deleteYn = matching.getDeleteYn();
     }
 
 }
