@@ -7,6 +7,7 @@ import com.hibit.kusitms26tht3hibitback.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -63,6 +64,21 @@ public class UserController {
         return response;
     }
 
+    @Operation(summary = "회원가입 - 닉네임 중복 확인")
+    @RequestMapping(method = RequestMethod.GET, path = "/sign-up/exists/{nickname}")
+    public Map<String, Object> verifyNickname(@Parameter(name = "nickname", description = "user의 nickname", in = ParameterIn.PATH) @PathVariable String nickname){
+        Map<String, Object> response = new HashMap<>();
+        if(userService.existNickname(nickname)==false){
+            response.put("result", "사용 가능한 닉네임입니다.");
+            response.put("nickname", nickname);
+        }
+        else{
+            response.put("result", "FAIL");
+            response.put("reason", "이미 존재하는 닉네임입니다.");
+        }
+        return response;
+    }
+
     @Operation(summary = "signin", description = "로그인")
     @PostMapping("/login")
     public String login(@RequestBody Map<String, String> user){
@@ -76,4 +92,6 @@ public class UserController {
 
         return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
     }
+
+
 }
