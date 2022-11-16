@@ -62,7 +62,7 @@ public class Users implements UserDetails {
     @Column(nullable = false, length = 100)
     @Schema(description = "자기소개", example = "안녕")
     private String introduce;
-    
+
     @Column
     private String admin="USER";
 
