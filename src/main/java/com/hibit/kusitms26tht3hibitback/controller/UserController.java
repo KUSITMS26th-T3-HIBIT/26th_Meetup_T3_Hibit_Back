@@ -1,6 +1,7 @@
 package com.hibit.kusitms26tht3hibitback.controller;
 
 import com.hibit.kusitms26tht3hibitback.domain.Users;
+import com.hibit.kusitms26tht3hibitback.dto.SignUpDto;
 import com.hibit.kusitms26tht3hibitback.global.jwt.JwtTokenProvider;
 import com.hibit.kusitms26tht3hibitback.repository.UserRepository;
 import com.hibit.kusitms26tht3hibitback.service.UserService;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import lombok.extern.slf4j.Slf4j;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,9 +45,9 @@ public class UserController {
             @Parameter(name = "home",description="주소",example = "경기도"),
             @Parameter(name = "introduce",description="자기 소개",example = "안녕하세요.")})
     @RequestMapping(method = RequestMethod.POST, path = "/sign-up")
-    public Users register(@RequestBody Users users) {
+    public Users register(@RequestBody SignUpDto signUpDto) {
 
-        return userService.insertUser(users);
+        return userService.insertUser(signUpDto);
     }
 
     @Operation(summary = "signup", description = "아이디 중복 확인")
