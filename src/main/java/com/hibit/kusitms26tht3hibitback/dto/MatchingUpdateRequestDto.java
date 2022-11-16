@@ -19,20 +19,18 @@ public class MatchingUpdateRequestDto {
     private int number;
     private LocalDateTime start_date;
     private LocalDateTime finish_date;
-    private LocalDateTime end_date;
     private String openchat;
     private String want;
 
 
     @Builder
-    public MatchingUpdateRequestDto(String title, String exhibition, String content, int number, LocalDateTime start_date, LocalDateTime finish_date, LocalDateTime end_date, String openchat, String want){
+    public MatchingUpdateRequestDto(String title, String exhibition, String content, int number, LocalDateTime start_date, LocalDateTime finish_date, String openchat, String want){
         this.title= title;
         this.exhibition= exhibition;
         this.content= content;
         this.number= number;
         this.start_date= start_date;
         this.finish_date=finish_date;
-        this.end_date=end_date;
         this.openchat=openchat;
         this.want=want;
     }

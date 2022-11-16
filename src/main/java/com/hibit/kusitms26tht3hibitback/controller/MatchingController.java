@@ -48,10 +48,9 @@ public class MatchingController {
         return matchingService.update(idx, requestDto);
     }
 
-    @PutMapping("/delete/{idx}")
+    @DeleteMapping("/{idx}")
     public int delete(@PathVariable int idx){
         return matchingService.delete(idx);
     }
-
 }
 

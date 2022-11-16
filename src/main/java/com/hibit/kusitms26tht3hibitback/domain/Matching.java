@@ -41,9 +41,6 @@ public class Matching extends BaseTimeEntity {
     private LocalDateTime finish_date;
 
     @Column(nullable = false)
-    private LocalDateTime end_date;
-
-    @Column(nullable = false)
     private boolean end;
 
     @Column(nullable = false, columnDefinition = "integer default 0")
@@ -60,7 +57,7 @@ public class Matching extends BaseTimeEntity {
 
     @Builder
     public Matching(Users user, String title, String exhibition, String content, int number,
-                    LocalDateTime start_date,LocalDateTime finish_date, LocalDateTime end_date,
+                    LocalDateTime start_date,LocalDateTime finish_date,
                     boolean end, int view, String openchat, String want) {
         this.user = user;
         this.title = title;
@@ -69,14 +66,13 @@ public class Matching extends BaseTimeEntity {
         this.number = number;
         this.start_date = start_date;
         this.finish_date = finish_date;
-        this.end_date = end_date;
         this.end = end;
         this.view = view;
         this.openchat = openchat;
         this.want = want;
     }
     public void update(String title, String exhibition, String content, int number,
-                       LocalDateTime start_date, LocalDateTime finish_date, LocalDateTime end_date,
+                       LocalDateTime start_date, LocalDateTime finish_date,
                        String openchat, String want) {
         this.title = title;
         this.exhibition = exhibition;
@@ -84,7 +80,6 @@ public class Matching extends BaseTimeEntity {
         this.number = number;
         this.start_date = start_date;
         this.finish_date = finish_date;
-        this.end_date = end_date;
         this.openchat = openchat;
         this.want = want;
     }

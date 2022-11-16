@@ -40,7 +40,6 @@ public class MatchingRepositoryTest {
                         .number(1)
                         .start_date(start)
                         .finish_date(finish)
-                        .end_date(end_d)
                         .end(true)
                         .view(2)
                         .openchat("httpsss")

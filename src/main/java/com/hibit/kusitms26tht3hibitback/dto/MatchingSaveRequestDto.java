@@ -16,7 +16,6 @@ public class MatchingSaveRequestDto {
     private int number;
     private LocalDateTime start_date;
     private LocalDateTime finish_date;
-    private LocalDateTime end_date;
     private boolean end;
     private int view;
     private String openchat;
@@ -30,7 +29,6 @@ public class MatchingSaveRequestDto {
                 .number(number)
                 .start_date(start_date)
                 .finish_date(finish_date)
-                .end_date(end_date)
                 .end(end)
                 .view(view)
                 .openchat(openchat)

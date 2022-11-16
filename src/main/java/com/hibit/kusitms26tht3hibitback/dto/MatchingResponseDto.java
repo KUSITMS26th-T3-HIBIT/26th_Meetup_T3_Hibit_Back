@@ -17,7 +17,6 @@ public class MatchingResponseDto {
     private int number;
     private LocalDateTime start_date;
     private LocalDateTime finish_date;
-    private LocalDateTime end_date;
     private boolean end;
     private int view;
     private String openchat;
@@ -33,7 +32,6 @@ public class MatchingResponseDto {
         this.number= matching.getNumber();
         this.start_date=matching.getStart_date();
         this.finish_date=matching.getFinish_date();
-        this.end_date=matching.getEnd_date();
         this.end= matching.isEnd();
         this.view=matching.getView();
         this.openchat=matching.getOpenchat();

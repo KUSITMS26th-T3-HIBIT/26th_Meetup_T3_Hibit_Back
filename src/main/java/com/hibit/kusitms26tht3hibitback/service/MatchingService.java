@@ -47,7 +47,6 @@ public class MatchingService {
                 requestDto.getNumber(),
                 requestDto.getStart_date(),
                 requestDto.getFinish_date(),
-                requestDto.getEnd_date(),
                 requestDto.getOpenchat(),
                 requestDto.getWant());
         return idx;
@@ -59,8 +58,4 @@ public class MatchingService {
         entity.delete();
         return idx;
     }
-
-
-
-
 }
