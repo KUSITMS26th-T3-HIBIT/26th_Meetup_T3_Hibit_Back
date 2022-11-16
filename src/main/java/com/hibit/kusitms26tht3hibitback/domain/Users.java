@@ -73,7 +73,7 @@ public class Users implements UserDetails {
 
     @ElementCollection
     @Schema(description = "성격")
-    private List<Integer> character;
+    private List<Integer> personality;
 
     @ElementCollection
     @Schema(description = "취미")
