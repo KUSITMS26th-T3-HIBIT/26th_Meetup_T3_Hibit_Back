@@ -5,6 +5,7 @@ import com.hibit.kusitms26tht3hibitback.global.jwt.JwtTokenProvider;
 import com.hibit.kusitms26tht3hibitback.repository.UserRepository;
 import com.hibit.kusitms26tht3hibitback.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import lombok.extern.slf4j.Slf4j;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,6 +34,14 @@ public class UserController {
     private JwtTokenProvider jwtTokenProvider;
 
     @Operation(summary = "signup", description = "회원가입")
+    @Parameters({@Parameter(name = "id",description="아이디",example = "arin123"),
+            @Parameter(name = "password",description="비밀번호",example = "1234"),
+            @Parameter(name = "nickname",description="닉네임",example = "이아린"),
+            @Parameter(name = "phone_number",description="전화번호",example = "01011112222"),
+            @Parameter(name = "age",description="나이",example = "24"),
+            @Parameter(name = "gender",description="성별",example = "True"),
+            @Parameter(name = "home",description="주소",example = "경기도"),
+            @Parameter(name = "introduce",description="자기 소개",example = "안녕하세요.")})
     @RequestMapping(method = RequestMethod.POST, path = "/sign-up")
     public Users register(@RequestBody Users users) {
 
