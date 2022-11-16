@@ -4,6 +4,8 @@ import com.hibit.kusitms26tht3hibitback.domain.Users;
 import com.hibit.kusitms26tht3hibitback.global.jwt.JwtTokenProvider;
 import com.hibit.kusitms26tht3hibitback.repository.UserRepository;
 import com.hibit.kusitms26tht3hibitback.service.UserService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import lombok.extern.slf4j.Slf4j;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,15 +32,16 @@ public class UserController {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    @Operation(summary = "sign-in/up", description = "회원가입")
+    @Operation(summary = "signup", description = "회원가입")
     @RequestMapping(method = RequestMethod.POST, path = "/sign-up")
     public Users register(@RequestBody Users users) {
 
         return userService.insertUser(users);
     }
 
+    @Operation(summary = "signup", description = "아이디 중복 확인")
     @RequestMapping(method = RequestMethod.GET, path = "/sign-up/{id}")
-    public Map<String, Object> verifyEmail(@PathVariable String id){
+    public Map<String, Object> verifyEmail(@Parameter(name = "id", description = "user 의 id", in = ParameterIn.PATH) @PathVariable String id){
         Map<String, Object> response = new HashMap<>();
         if(userService.existId(id)==false){
             response.put("result", "사용 가능한 아이디입니다..");
@@ -51,6 +54,7 @@ public class UserController {
         return response;
     }
 
+    @Operation(summary = "signin", description = "로그인")
     @PostMapping("/login")
     public String login(@RequestBody Map<String, String> user){
         log.info("user id = {}", user.get("id"));
