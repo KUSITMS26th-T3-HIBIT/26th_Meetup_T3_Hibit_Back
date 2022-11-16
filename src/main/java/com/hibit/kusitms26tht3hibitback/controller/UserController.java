@@ -49,7 +49,7 @@ public class UserController {
         return userService.insertUser(users);
     }
 
-    @Operation(summary = "signup", description = "아이디 중복 확인")
+    @Operation(summary = "회원가입 - 아이디 중복 확인")
     @RequestMapping(method = RequestMethod.GET, path = "/sign-up/{id}")
     public Map<String, Object> verifyEmail(@Parameter(name = "id", description = "user 의 id", in = ParameterIn.PATH) @PathVariable String id){
         Map<String, Object> response = new HashMap<>();
