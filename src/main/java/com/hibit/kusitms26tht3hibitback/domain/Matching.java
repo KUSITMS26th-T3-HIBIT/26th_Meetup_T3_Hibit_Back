@@ -4,10 +4,13 @@ import com.hibit.kusitms26tht3hibitback.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@DynamicInsert
 @Getter
 @NoArgsConstructor
 @Entity
@@ -52,13 +55,14 @@ public class Matching extends BaseTimeEntity {
     @Column(nullable = false, length = 500)
     private String want;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
+    @ColumnDefault("N")
     private char deleteYn;
 
     @Builder
     public Matching(Users user, String title, String exhibition, String content, int number,
                     LocalDateTime start_date,LocalDateTime finish_date,
-                    boolean end, int view, String openchat, String want) {
+                    boolean end, int view, String openchat, String want, char deleteYn) {
         this.user = user;
         this.title = title;
         this.exhibition = exhibition;
@@ -70,6 +74,7 @@ public class Matching extends BaseTimeEntity {
         this.view = view;
         this.openchat = openchat;
         this.want = want;
+        this.deleteYn= deleteYn;
     }
     public void update(String title, String exhibition, String content, int number,
                        LocalDateTime start_date, LocalDateTime finish_date,

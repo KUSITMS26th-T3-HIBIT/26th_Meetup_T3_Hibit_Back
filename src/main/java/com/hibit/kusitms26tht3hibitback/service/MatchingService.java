@@ -58,4 +58,11 @@ public class MatchingService {
         entity.delete();
         return idx;
     }
+
+    public List<MatchingResponseDto> findByDeleteYn(final char deleteYn){
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdDate");
+        List<Matching> list= matchingRepository.findALlByDeleteYn(deleteYn, sort);
+        return list.stream().map(MatchingResponseDto::new).collect(Collectors.toList());
+    }
+
 }

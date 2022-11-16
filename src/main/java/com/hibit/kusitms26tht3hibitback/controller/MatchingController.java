@@ -33,8 +33,8 @@ public class MatchingController {
     }
 
     @GetMapping("/")
-    public List<MatchingResponseDto> findAll(){
-        return matchingService.findAll();
+    public List<MatchingResponseDto> findAll(@RequestParam final char deleteYn){
+        return matchingService.findByDeleteYn(deleteYn);
     }
 
     @GetMapping("/{idx}")
