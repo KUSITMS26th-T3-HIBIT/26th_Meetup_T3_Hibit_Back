@@ -1,22 +1,20 @@
 package com.hibit.kusitms26tht3hibitback.domain;
 
 import com.hibit.kusitms26tht3hibitback.BaseTimeEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-@DynamicInsert
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name ="matching")
 public class Matching extends BaseTimeEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idx;
@@ -38,13 +36,13 @@ public class Matching extends BaseTimeEntity {
     private int number;
 
     @Column(nullable = false)
-    private LocalDateTime start_date;
+    private LocalDate start_date;
 
     @Column(nullable = false)
-    private LocalDateTime finish_date;
+    private LocalDate finish_date;
 
     @Column(nullable = false)
-    private boolean end;
+    private boolean finish;
 
     @Column(nullable = false, columnDefinition = "integer default 0")
     private int view;
@@ -61,8 +59,8 @@ public class Matching extends BaseTimeEntity {
 
     @Builder
     public Matching(Users user, String title, String exhibition, String content, int number,
-                    LocalDateTime start_date,LocalDateTime finish_date,
-                    boolean end, int view, String openchat, String want, char deleteYn) {
+                    LocalDate start_date,LocalDate finish_date,
+                    boolean finish, int view, String openchat, String want, char deleteYn) {
         this.user = user;
         this.title = title;
         this.exhibition = exhibition;
@@ -70,14 +68,15 @@ public class Matching extends BaseTimeEntity {
         this.number = number;
         this.start_date = start_date;
         this.finish_date = finish_date;
-        this.end = end;
+        this.finish = finish;
         this.view = view;
         this.openchat = openchat;
         this.want = want;
         this.deleteYn= deleteYn;
     }
+
     public void update(String title, String exhibition, String content, int number,
-                       LocalDateTime start_date, LocalDateTime finish_date,
+                       LocalDate start_date, LocalDate finish_date,
                        String openchat, String want) {
         this.title = title;
         this.exhibition = exhibition;

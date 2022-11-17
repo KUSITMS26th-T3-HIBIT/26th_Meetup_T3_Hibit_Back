@@ -45,6 +45,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, path = "/sign-up")
     public Users register(@RequestBody Users users) {
 
+        users.setRoles("ROLE_USER");
         return userService.insertUser(users);
     }
 

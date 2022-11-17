@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hibit.kusitms26tht3hibitback.domain.Matching;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
@@ -15,9 +15,9 @@ public class MatchingResponseDto {
     private String exhibition;
     private String content;
     private int number;
-    private LocalDateTime start_date;
-    private LocalDateTime finish_date;
-    private boolean end;
+    private LocalDate start_date;
+    private LocalDate finish_date;
+    private boolean finish;
     private int view;
     private String openchat;
     private String want;
@@ -32,7 +32,7 @@ public class MatchingResponseDto {
         this.number= matching.getNumber();
         this.start_date=matching.getStart_date();
         this.finish_date=matching.getFinish_date();
-        this.end= matching.isEnd();
+        this.finish= matching.isFinish();
         this.view=matching.getView();
         this.openchat=matching.getOpenchat();
         this.want=matching.getWant();

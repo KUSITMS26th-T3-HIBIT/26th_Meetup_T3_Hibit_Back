@@ -6,25 +6,26 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
-@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 public class MatchingUpdateRequestDto {
 
     private String title;
     private String exhibition;
     private String content;
     private int number;
-    private LocalDateTime start_date;
-    private LocalDateTime finish_date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate start_date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate finish_date;
     private String openchat;
     private String want;
 
 
     @Builder
-    public MatchingUpdateRequestDto(String title, String exhibition, String content, int number, LocalDateTime start_date, LocalDateTime finish_date, String openchat, String want){
+    public MatchingUpdateRequestDto(String title, String exhibition, String content, int number, LocalDate start_date, LocalDate finish_date, String openchat, String want){
         this.title= title;
         this.exhibition= exhibition;
         this.content= content;

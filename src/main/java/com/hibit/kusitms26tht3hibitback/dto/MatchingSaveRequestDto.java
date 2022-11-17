@@ -2,22 +2,24 @@ package com.hibit.kusitms26tht3hibitback.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hibit.kusitms26tht3hibitback.domain.Matching;
+import com.hibit.kusitms26tht3hibitback.domain.Users;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Optional;
 
 @Getter
-@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 public class MatchingSaveRequestDto {
-
+    private Users user;
     private String title;
     private String exhibition;
     private String content;
     private int number;
-    private LocalDateTime start_date;
-    private LocalDateTime finish_date;
-    private boolean end;
-    private int view;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate start_date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate finish_date;
+    private boolean finish;
     private String openchat;
     private String want;
 
@@ -29,10 +31,12 @@ public class MatchingSaveRequestDto {
                 .number(number)
                 .start_date(start_date)
                 .finish_date(finish_date)
-                .end(end)
-                .view(view)
+                .finish(finish)
                 .openchat(openchat)
                 .want(want)
                 .build();
+    }
+    public void setUser(Users user) {
+        this.user = user;
     }
 }
