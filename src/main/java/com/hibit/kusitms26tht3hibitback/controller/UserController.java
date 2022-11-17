@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Slf4j
@@ -46,6 +47,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, path = "/sign-up")
     public Users register(@RequestBody Users users) {
 
+        users.setRoles("ROLE_USER");
         return userService.insertUser(users);
     }
 
@@ -93,5 +95,11 @@ public class UserController {
         return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
     }
 
+    @PutMapping("/profile/{id}")
+    public Users getUserDetails(@PathVariable String id){
+        Optional<Users> user = userRepository.findById(id);
+
+        return user.get();
+    }
 
 }
