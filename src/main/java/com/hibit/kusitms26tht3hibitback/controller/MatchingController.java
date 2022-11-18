@@ -64,9 +64,10 @@ public class MatchingController {
 
     @GetMapping("/list")
     @Operation(summary = "matching/list", description = "매칭글 리스트")
-    public List<MatchingResponseDto> findAll(@RequestParam final char deleteYn){
+    public List<MatchingResponseDto> findAll(){
         //deleteYn = N인 게시글 리스트 가져오기
-        return matchingService.findByDeleteYn(deleteYn);
+        char flag = 'N';
+        return matchingService.findByDeleteYn(flag);
     }
 
     @GetMapping("/{idx}")

@@ -40,8 +40,9 @@ public class PostController {
 
     @GetMapping("/list")
     @Operation(summary = "community/list", description = "커뮤니티 글 리스트")
-    public List<PostResponseDto> findById(@RequestParam final char deleteYn){
-        return postsService.findByDeleteYn(deleteYn);
+    public List<PostResponseDto> findById(){
+        char flag = 'N';
+        return postsService.findByDeleteYn(flag);
     }
 
     @GetMapping("/{idx}")
