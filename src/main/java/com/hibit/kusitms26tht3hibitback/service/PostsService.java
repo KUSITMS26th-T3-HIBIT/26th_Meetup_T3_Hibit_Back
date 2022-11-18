@@ -1,5 +1,6 @@
 package com.hibit.kusitms26tht3hibitback.service;
 
+import com.hibit.kusitms26tht3hibitback.domain.Matching;
 import com.hibit.kusitms26tht3hibitback.domain.Posts;
 import com.hibit.kusitms26tht3hibitback.domain.Users;
 import com.hibit.kusitms26tht3hibitback.dto.PostResponseDto;
@@ -24,8 +25,12 @@ public class PostsService {
     UserRepository userRepository;
 
     @Transactional
-    public int save(PostsSaveRequestDto requestDto){
-        return postsRepository.save(requestDto.toEntity()).getIdx();
+    public int save(PostsSaveRequestDto requestDto, Users user)
+    {
+        requestDto.setUser(user);
+        Posts post = requestDto.toEntity();
+        postsRepository.save(post);
+        return post.getIdx();
     }
 
     @Transactional

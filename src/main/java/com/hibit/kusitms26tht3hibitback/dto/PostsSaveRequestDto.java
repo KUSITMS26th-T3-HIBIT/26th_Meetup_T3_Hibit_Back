@@ -30,6 +30,7 @@ public class PostsSaveRequestDto {
 
     public Posts toEntity(){
         return Posts.builder()
+                .user(user)
                 .title(title)
                 .content(content)
                 .file(file)

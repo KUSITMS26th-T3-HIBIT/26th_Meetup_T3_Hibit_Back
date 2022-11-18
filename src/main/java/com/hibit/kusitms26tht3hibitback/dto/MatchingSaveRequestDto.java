@@ -31,8 +31,6 @@ public class MatchingSaveRequestDto {
     @Schema(description = "마감 날짜", example = "2022-11-18")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate finish_date;
-    @Schema(description = "모집마감 여부", example = "false")
-    private boolean finish;
     @Schema(description = "오픈채팅 url", example = "https://openchat~~")
     private String openchat;
     @Schema(description = "원하는 메이트 정보", example = "2030여성으로, 수도권에 거주하시는 분~~")
@@ -43,7 +41,7 @@ public class MatchingSaveRequestDto {
     @Builder
     public MatchingSaveRequestDto(Users user, String title, String exhibition, String content,
                                   int category, int number, LocalDate start_date, LocalDate finish_date,
-                                  boolean finish, String openchat, String want, char deleteYn){
+                                  String openchat, String want, char deleteYn){
         this.user = user;
         this.title=title;
         this.exhibition=exhibition;
@@ -52,7 +50,6 @@ public class MatchingSaveRequestDto {
         this.number=number;
         this.start_date=start_date;
         this.finish_date=finish_date;
-        this.finish=finish;
         this.openchat=openchat;
         this.want=want;
         this.deleteYn = deleteYn;
@@ -60,6 +57,7 @@ public class MatchingSaveRequestDto {
 
     public Matching toEntity(){
         return Matching.builder()
+                .user(user)
                 .title(title)
                 .exhibition(exhibition)
                 .content(content)
@@ -67,7 +65,6 @@ public class MatchingSaveRequestDto {
                 .number(number)
                 .start_date(start_date)
                 .finish_date(finish_date)
-                .finish(finish)
                 .openchat(openchat)
                 .want(want)
                 .deleteYn(deleteYn)

@@ -1,9 +1,11 @@
 package com.hibit.kusitms26tht3hibitback.service;
 
 import com.hibit.kusitms26tht3hibitback.domain.Matching;
+import com.hibit.kusitms26tht3hibitback.domain.Users;
 import com.hibit.kusitms26tht3hibitback.dto.MatchingResponseDto;
 import com.hibit.kusitms26tht3hibitback.dto.MatchingSaveRequestDto;
 import com.hibit.kusitms26tht3hibitback.dto.MatchingUpdateRequestDto;
+import com.hibit.kusitms26tht3hibitback.dto.UsermateResponseDto;
 import com.hibit.kusitms26tht3hibitback.repository.MatchingRepository;
 import com.hibit.kusitms26tht3hibitback.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +27,11 @@ public class MatchingService {
     UserRepository userRepository;
 
     @Transactional
-    public int save(MatchingSaveRequestDto requestDto){
-        return matchingRepository.save(requestDto.toEntity()).getIdx();
+    public int save(MatchingSaveRequestDto requestDto, Users user){
+        requestDto.setUser(user);
+        Matching matching = requestDto.toEntity();
+        matchingRepository.save(matching);
+        return matching.getIdx();
     }
 
     @Transactional
@@ -69,4 +74,10 @@ public class MatchingService {
         return list.stream().map(MatchingResponseDto::new).collect(Collectors.toList());
     }
 
+    @Transactional
+    public UsermateResponseDto findUserById(int idx){
+        Matching entity = matchingRepository.findById(idx).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id="+idx));
+        Users Mate = entity.getUser();
+        return new UsermateResponseDto(Mate);
+    }
 }

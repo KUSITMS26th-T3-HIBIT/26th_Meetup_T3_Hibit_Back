@@ -53,7 +53,7 @@ public class Matching extends BaseTimeEntity {
 
     @Column(nullable = false)
     @Schema(description = "모집마감 여부", example = "false")
-    private boolean finish;
+    private boolean finish = false;
 
     @Column(nullable = false, columnDefinition = "integer default 0")
     private int view;
@@ -108,4 +108,5 @@ public class Matching extends BaseTimeEntity {
     public void delete(){
         this.deleteYn = 'Y';
     }
+
 }

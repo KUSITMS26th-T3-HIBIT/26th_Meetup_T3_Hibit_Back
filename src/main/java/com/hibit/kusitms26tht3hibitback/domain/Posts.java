@@ -38,7 +38,8 @@ public class Posts extends BaseTimeEntity {
     private char deleteYn;
 
     @Builder
-    public Posts(String title, String content, String file, int view, char deleteYn){
+    public Posts(Users user,String title, String content, String file, int view, char deleteYn){
+        this.user = user;
         this.title = title;
         this.content = content;
         this.file = file;
