@@ -1,10 +1,12 @@
 package com.hibit.kusitms26tht3hibitback.controller;
 
 
+import com.hibit.kusitms26tht3hibitback.domain.Matching;
 import com.hibit.kusitms26tht3hibitback.domain.Users;
 import com.hibit.kusitms26tht3hibitback.dto.MatchingResponseDto;
 import com.hibit.kusitms26tht3hibitback.dto.MatchingSaveRequestDto;
 import com.hibit.kusitms26tht3hibitback.dto.MatchingUpdateRequestDto;
+import com.hibit.kusitms26tht3hibitback.dto.UsermateResponseDto;
 import com.hibit.kusitms26tht3hibitback.global.util.SecurityUtil;
 import com.hibit.kusitms26tht3hibitback.repository.MatchingRepository;
 import com.hibit.kusitms26tht3hibitback.repository.UserRepository;
@@ -17,9 +19,11 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.procedure.spi.ParameterRegistrationImplementor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +35,9 @@ public class MatchingController {
 
     @Autowired
     private MatchingService matchingService;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
     @PostMapping("/post")
@@ -48,13 +55,11 @@ public class MatchingController {
             @Parameter(name = "openchat",description="옾챗url",example = "http:/open"),
             @Parameter(name = "want",description="원하는 메이트",example = "말 적은 사람이랑, 사진 잘 찍는사람이랑 가고싶어요")
     })
-    public int save(@RequestBody MatchingSaveRequestDto requestDto){
-        //로그인 한 유저 정보 추가
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Users user= (Users)principal;
-        requestDto.setUser(user);
+    public int save(@RequestBody MatchingSaveRequestDto requestDto, Authentication authentication){
+        //로그인 한 유저
+        Users user = (Users) authentication.getPrincipal();
         //글 작성 정보 저장
-        return matchingService.save(requestDto);
+        return matchingService.save(requestDto, user);
     }
 
     @GetMapping("/list")
@@ -72,6 +77,14 @@ public class MatchingController {
         return matchingService.findById(idx);
     }
     //매칭메이트 메이트 세부페이지 -> api따로
+    @GetMapping("/{idx}/mate")
+    @Operation(summary = "matching/{idx}/mate", description = "매칭메이트 세부 페이지")
+    public UsermateResponseDto findUserById(@PathVariable int idx)
+    {
+        return matchingService.findUserById(idx);
+    }
+
+
 
     @PutMapping("/edit/{idx}")
     @Operation(summary = "matching/edit/{idx}", description = "매칭글 수정")

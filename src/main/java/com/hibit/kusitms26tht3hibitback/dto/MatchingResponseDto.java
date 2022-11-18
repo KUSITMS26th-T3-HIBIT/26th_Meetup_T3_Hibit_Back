@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 public class MatchingResponseDto {
     private int idx;
-    private Users user;
+    private int user;
     @Schema(description = "제목", example = "함께 관람 하실 분 구합니다!")
     private String title;
     @Schema(description = "전시회 이름", example = "장 줄리앙 : 그러면, 거기")
@@ -45,7 +45,7 @@ public class MatchingResponseDto {
 
     public MatchingResponseDto(@NotNull Matching entity){
         this.idx= entity.getIdx();
-        this.user = entity.getUser();
+        this.user = entity.getUser().getIdx();
         this.title=entity.getTitle();
         this.exhibition= entity.getExhibition();
         this.content= entity.getContent();

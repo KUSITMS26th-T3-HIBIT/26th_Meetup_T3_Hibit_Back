@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class PostResponseDto {
 
     private int idx;
-    private Users user;
+    private int user;
     private String title;
     private String content;
     private String file;
@@ -21,7 +21,7 @@ public class PostResponseDto {
 
     public PostResponseDto(@NotNull Posts entity){
         this.idx= entity.getIdx();
-        this.user = entity.getUser();
+        this.user=entity.getUser().getIdx();
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.file=entity.getFile();

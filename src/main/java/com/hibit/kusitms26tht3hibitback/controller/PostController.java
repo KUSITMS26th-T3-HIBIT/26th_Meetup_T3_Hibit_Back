@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,12 +33,9 @@ public class PostController {
             @Parameter(name = "content", description = "내용", example = "3층까지 있었고,,, 사진이,,,"),
             @Parameter(name = "file", description = "파일", example = "사진 url 아 여러개면 배열로 바꿔야겠다...")
     })
-    public int save(@RequestBody PostsSaveRequestDto requestDto){
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Users user= (Users)principal;
-        requestDto.setUser(user);
-        return postsService.save(requestDto);
+    public int save(@RequestBody PostsSaveRequestDto requestDto, Authentication authentication){
+        Users user = (Users) authentication.getPrincipal();
+        return postsService.save(requestDto, user);
     }
 
     @GetMapping("/list")
