@@ -47,6 +47,7 @@ public class MatchingService {
         matching.update(requestDto.getTitle(),
                 requestDto.getExhibition(),
                 requestDto.getContent(),
+                requestDto.getCategory(),
                 requestDto.getNumber(),
                 requestDto.getStart_date(),
                 requestDto.getFinish_date(),

@@ -40,6 +40,7 @@ public class MatchingController {
     @Parameters({@Parameter(name = "title",description="제목",example = "전시회보러가요"),
             @Parameter(name = "exhibition",description="전시회이름",example = "디뮤지엄 어쩌다 사랑"),
             @Parameter(name = "content",description="내용",example = "전시회 처음 보러가는데,~~~~"),
+            @Parameter(name = "category",description="전시카테고리",example = "1"),
             @Parameter(name = "number",description="명수",example = "2"),
             @Parameter(name = "start_date",description="시작 날짜",example = "2022-11-15"),
             @Parameter(name = "end_date",description="마감 날짜",example = "2022-11-19"),
@@ -48,18 +49,18 @@ public class MatchingController {
             @Parameter(name = "want",description="원하는 메이트",example = "말 적은 사람이랑, 사진 잘 찍는사람이랑 가고싶어요")
     })
     public int save(@RequestBody MatchingSaveRequestDto requestDto){
-        //로그인한 유저 추가 필요
-
+        //로그인 한 유저 정보 추가
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Users user= (Users)principal;
         requestDto.setUser(user);
-
+        //글 작성 정보 저장
         return matchingService.save(requestDto);
     }
 
     @GetMapping("/list")
-    @Operation(summary = "matching/", description = "매칭글 리스트")
+    @Operation(summary = "matching/list", description = "매칭글 리스트")
     public List<MatchingResponseDto> findAll(@RequestParam final char deleteYn){
+        //deleteYn = N인 게시글 리스트 가져오기
         return matchingService.findByDeleteYn(deleteYn);
     }
 
@@ -67,9 +68,10 @@ public class MatchingController {
     @Operation(summary = "matching/{Idx}", description = "매칭글 세부 페이지")
     public MatchingResponseDto findById(@PathVariable int idx)
     {
-        //매칭메이트 세부페이지 -> api따로?
+        //매칭글 세부페이지
         return matchingService.findById(idx);
     }
+    //매칭메이트 메이트 세부페이지 -> api따로
 
     @PutMapping("/edit/{idx}")
     @Operation(summary = "matching/edit/{idx}", description = "매칭글 수정")
@@ -82,7 +84,6 @@ public class MatchingController {
     public int delete(@PathVariable int idx){
         return matchingService.delete(idx);
     }
-
 
 }
 
