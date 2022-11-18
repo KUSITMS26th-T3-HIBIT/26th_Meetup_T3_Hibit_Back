@@ -34,7 +34,7 @@ public class PostsSaveRequestDto {
                 .title(title)
                 .content(content)
                 .file(file)
-                .deleteYn(deleteYn)
+                .deleteYn('N')
                 .build();
     }
 

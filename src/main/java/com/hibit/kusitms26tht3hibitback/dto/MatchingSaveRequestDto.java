@@ -35,7 +35,6 @@ public class MatchingSaveRequestDto {
     private String openchat;
     @Schema(description = "원하는 메이트 정보", example = "2030여성으로, 수도권에 거주하시는 분~~")
     private String want;
-    @Schema(description = "게시글 삭제 여부", example = "N")
     private char deleteYn;
 
     @Builder
@@ -52,7 +51,8 @@ public class MatchingSaveRequestDto {
         this.finish_date=finish_date;
         this.openchat=openchat;
         this.want=want;
-        this.deleteYn = deleteYn;
+        this.deleteYn =deleteYn;
+
     }
 
     public Matching toEntity(){
@@ -67,7 +67,7 @@ public class MatchingSaveRequestDto {
                 .finish_date(finish_date)
                 .openchat(openchat)
                 .want(want)
-                .deleteYn(deleteYn)
+                .deleteYn('N')
                 .build();
     }
     public void setUser(Users user) {
