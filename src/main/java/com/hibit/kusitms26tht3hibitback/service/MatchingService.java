@@ -7,6 +7,7 @@ import com.hibit.kusitms26tht3hibitback.dto.MatchingUpdateRequestDto;
 import com.hibit.kusitms26tht3hibitback.repository.MatchingRepository;
 import com.hibit.kusitms26tht3hibitback.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +15,14 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Service
 public class MatchingService {
 
-    private final MatchingRepository matchingRepository;
-    private final UserRepository userRepository;
+    @Autowired
+    MatchingRepository matchingRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Transactional
     public int save(MatchingSaveRequestDto requestDto){
@@ -28,7 +31,7 @@ public class MatchingService {
 
     @Transactional
     public List<MatchingResponseDto> findAll(){
-        List<Matching>list = matchingRepository.findAll(Sort.by(Sort.Direction.DESC, "createdDate"));
+        List<Matching> list = matchingRepository.findAll(Sort.by(Sort.Direction.DESC, "createdDate"));
         return list.stream().map(MatchingResponseDto::new).collect(Collectors.toList());
     }
 
@@ -40,7 +43,7 @@ public class MatchingService {
     }
     @Transactional
     public int update(int idx, MatchingUpdateRequestDto requestDto){
-        Matching matching = matchingRepository.findById(idx).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id="+idx));;
+        Matching matching = matchingRepository.findById(idx).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id="+idx));
         matching.update(requestDto.getTitle(),
                 requestDto.getExhibition(),
                 requestDto.getContent(),
@@ -54,7 +57,7 @@ public class MatchingService {
 
     @Transactional
     public int delete(int idx) {
-        Matching entity = matchingRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id="+idx));;
+        Matching entity = matchingRepository.findById(idx).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id="+idx));
         entity.delete();
         return idx;
     }

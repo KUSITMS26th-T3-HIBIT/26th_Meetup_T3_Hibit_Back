@@ -14,6 +14,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.procedure.spi.ParameterRegistrationImplementor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +26,12 @@ import java.util.Optional;
 @Tag(name="matching", description = "매칭 API")
 @RestController
 @RequestMapping("/matching")
-@RequiredArgsConstructor
 
 public class MatchingController {
 
-    private final MatchingService matchingService;
-    private final MatchingRepository matchingRepository;
-    private final UserRepository userRepository;
+    @Autowired
+    private MatchingService matchingService;
+
 
     @PostMapping("/post")
     @Secured({"ROLE_USER"})
@@ -56,7 +57,7 @@ public class MatchingController {
         return matchingService.save(requestDto);
     }
 
-    @GetMapping("/")
+    @GetMapping("/list")
     @Operation(summary = "matching/", description = "매칭글 리스트")
     public List<MatchingResponseDto> findAll(@RequestParam final char deleteYn){
         return matchingService.findByDeleteYn(deleteYn);

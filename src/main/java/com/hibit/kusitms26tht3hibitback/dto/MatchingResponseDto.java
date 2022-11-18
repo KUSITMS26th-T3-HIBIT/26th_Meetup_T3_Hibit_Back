@@ -2,15 +2,20 @@ package com.hibit.kusitms26tht3hibitback.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hibit.kusitms26tht3hibitback.domain.Matching;
+import com.hibit.kusitms26tht3hibitback.domain.Users;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 
+@NoArgsConstructor
 @Getter
 @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 public class MatchingResponseDto {
     private int idx;
-    private int user;
+    private Users user;
     private String title;
     private String exhibition;
     private String content;
@@ -23,20 +28,20 @@ public class MatchingResponseDto {
     private String want;
     private char deleteYn;
 
-    public MatchingResponseDto(Matching matching){
-        this.idx= matching.getIdx();
-        this.user = matching.getUser().getIdx();
-        this.title=matching.getTitle();
-        this.exhibition= matching.getExhibition();
-        this.content= matching.getContent();
-        this.number= matching.getNumber();
-        this.start_date=matching.getStart_date();
-        this.finish_date=matching.getFinish_date();
-        this.finish= matching.isFinish();
-        this.view=matching.getView();
-        this.openchat=matching.getOpenchat();
-        this.want=matching.getWant();
-        this.deleteYn = matching.getDeleteYn();
+    public MatchingResponseDto(@NotNull Matching entity){
+        this.idx= entity.getIdx();
+        this.user = entity.getUser();
+        this.title=entity.getTitle();
+        this.exhibition= entity.getExhibition();
+        this.content= entity.getContent();
+        this.number= entity.getNumber();
+        this.start_date=entity.getStart_date();
+        this.finish_date=entity.getFinish_date();
+        this.finish= entity.isFinish();
+        this.view=entity.getView();
+        this.openchat=entity.getOpenchat();
+        this.want=entity.getWant();
+        this.deleteYn = entity.getDeleteYn();
     }
 
 }

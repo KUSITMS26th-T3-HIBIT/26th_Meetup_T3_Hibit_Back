@@ -29,7 +29,7 @@ public class Matching extends BaseTimeEntity {
     @Column(nullable = false, length = 20)
     private String exhibition;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(nullable = false, length = 200)
     private String content;
 
     @Column(nullable = false, length = 1)
@@ -50,11 +50,10 @@ public class Matching extends BaseTimeEntity {
     @Column(nullable = false, length = 50)
     private String openchat;
 
-    @Column(nullable = false, length = 500)
+    @Column(nullable = false, length = 200)
     private String want;
 
     @Column(nullable = false)
-    @ColumnDefault("N")
     private char deleteYn;
 
     @Builder
