@@ -18,4 +18,8 @@ public class UserService {
     public boolean existId(String id){
         return userRepository.existsById(id);
     }
+
+    public boolean existNickname(String nickname){
+        return userRepository.existsByNickname(nickname);
+    }
 }
