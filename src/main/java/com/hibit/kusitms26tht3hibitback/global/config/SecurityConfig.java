@@ -24,9 +24,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        http.cors().configurationSource(corsConfigurationSource());
+        
         http.csrf().disable();
         //http.httpBasic().disable(); // 일반적인 루트가 아닌 다른 방식으로 요청시 거절, header에 id, pw가 아닌 token(jwt)을 달고 간다. 그래서 basic이 아닌 bearer를 사용한다.
         http.httpBasic().disable()
@@ -36,7 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/matching/**").hasRole("USER")
                 .antMatchers("/community/**").hasRole("USER")
                 .antMatchers("/**").permitAll()
-                .and().exceptionHandling()
+                .and()
+                .exceptionHandling()
                 .accessDeniedPage("/403")
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
