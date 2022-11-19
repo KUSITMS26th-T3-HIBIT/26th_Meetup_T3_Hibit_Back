@@ -36,6 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/matching/**").hasRole("USER")
                 .antMatchers("/community/**").hasRole("USER")
                 .antMatchers("/**").permitAll()
+                .and().exceptionHandling()
+                .accessDeniedPage("/403")
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class); // JwtAuthenticationFilter를 UsernamePasswordAuthenticationFilter 전에 넣는다
