@@ -2,6 +2,7 @@ package com.hibit.kusitms26tht3hibitback.service;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -35,14 +36,13 @@ public class S3Service {
     @Value("${cloud.aws.credentials.secretKey}")
     private String secretKey;
 
-    @Value("${cloud.aws.region.static}")
-    private String region;
 
     BasicAWSCredentials awsCreds = new BasicAWSCredentials("accessKey", "secretkey");
     AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
             .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
-            .withRegion(region)
+            .withRegion(Regions.AP_NORTHEAST_1)
             .build();
+
     @Transactional
     public void saveUploadFile(MultipartFile multipartFile) throws IOException {
         ObjectMetadata objectMetadata = new ObjectMetadata();
