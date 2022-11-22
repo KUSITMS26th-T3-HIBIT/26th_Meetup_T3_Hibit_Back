@@ -51,7 +51,7 @@ public class MatchingController {
             @Parameter(name = "number",description="명수",example = "2"),
             @Parameter(name = "start_date",description="시작 날짜",example = "2022-11-15"),
             @Parameter(name = "finish_date",description="마감 날짜",example = "2022-11-19"),
-            @Parameter(name = "finish",description="마감여부",example = false),
+            @Parameter(name = "finish",description="마감여부",example = "false"),
             @Parameter(name = "openchat",description="옾챗url",example = "http:/open"),
             @Parameter(name = "want",description="원하는 메이트",example = "말 적은 사람이랑, 사진 잘 찍는사람이랑 가고싶어요")
     })
