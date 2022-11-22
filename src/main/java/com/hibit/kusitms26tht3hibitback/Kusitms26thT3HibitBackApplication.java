@@ -1,3 +1,5 @@
+
+
 package com.hibit.kusitms26tht3hibitback;
 
 import org.springframework.boot.SpringApplication;
@@ -22,13 +24,4 @@ public class Kusitms26thT3HibitBackApplication {
         SpringApplication.run(Kusitms26thT3HibitBackApplication.class, args);
     }
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:3000");
-            }
-        };
-    }
 }

@@ -1,6 +1,11 @@
 package com.hibit.kusitms26tht3hibitback.service;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -20,11 +25,23 @@ import java.util.UUID;
 @Service
 public class S3Service {
 
-    private final AmazonS3Client amazonS3Client;
+//    private final AmazonS3Client amazonS3Client;
     private final UploadFileRepository uploadFileRepository;
 
     @Value("hibit-bucket")
     private String bucket;
+    @Value("${cloud.aws.credentials.accessKey}")
+    private String accessKey;
+
+    @Value("${cloud.aws.credentials.secretKey}")
+    private String secretKey;
+
+
+    BasicAWSCredentials awsCreds = new BasicAWSCredentials("accessKey", "secretkey");
+    AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+            .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+            .withRegion(Regions.AP_NORTHEAST_1)
+            .build();
 
     @Transactional
     public void saveUploadFile(MultipartFile multipartFile) throws IOException {
@@ -40,11 +57,11 @@ public class S3Service {
         String key = "test/" + storeFileName;
 
         try (InputStream inputStream = multipartFile.getInputStream()) {
-            amazonS3Client.putObject(new PutObjectRequest(bucket, key, inputStream, objectMetadata)
+            s3Client.putObject(new PutObjectRequest(bucket, key, inputStream, objectMetadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
         }
 
-        String storeFileUrl = amazonS3Client.getUrl(bucket, key).toString();
+        String storeFileUrl = s3Client.getUrl(bucket, key).toString();
         UploadFile uploadFile = new UploadFile(originalFilename, storeFileUrl);
         uploadFileRepository.save(uploadFile);
     }
