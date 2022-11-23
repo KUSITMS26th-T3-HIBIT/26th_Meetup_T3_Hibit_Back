@@ -128,4 +128,19 @@ public class Users implements UserDetails {
     public void setRoles(String role_user) {
         this.roles = Collections.singletonList(role_user);
     }
+
+    public void update(String password, String nickname, String phone_number, String birth, boolean gender, String email, String home, String introduce, int style, List<Integer> personality, List<Integer> hobby){
+        this.password = password;
+        this.nickname = nickname;
+        this.phone_number = phone_number;
+        this.birth = birth;
+        this.gender = gender;
+        this.email = email;
+        this.home = home;
+        this.introduce = introduce;
+        this.style = style;
+        this.personality = personality;
+        this.hobby = hobby;
+    }
+
 }
