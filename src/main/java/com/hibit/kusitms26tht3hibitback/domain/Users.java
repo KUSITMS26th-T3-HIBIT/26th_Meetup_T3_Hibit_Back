@@ -38,6 +38,10 @@ public class Users implements UserDetails {
     private String password;
 
     @Column(nullable = false, length = 20)
+    @Schema(description = "이름", example = "히빗어쩌구")
+    private String name;
+
+    @Column(nullable = false, length = 20)
     @Schema(description = "닉네임", example = "아린")
     private String nickname;
 
