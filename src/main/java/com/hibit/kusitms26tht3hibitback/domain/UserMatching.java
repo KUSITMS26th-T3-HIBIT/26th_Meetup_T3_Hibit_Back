@@ -1,5 +1,6 @@
 package com.hibit.kusitms26tht3hibitback.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hibit.kusitms26tht3hibitback.BaseTimeEntity;
 import com.hibit.kusitms26tht3hibitback.dto.MatchingResponseDto;
 import lombok.Builder;
@@ -19,13 +20,20 @@ public class UserMatching extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idx;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_idx")
     private Users user;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "matching_idx")
     private Matching matching;
+
+    @Column(nullable = false)
+    private String nickname;
+    @Column(nullable = false)
+    private int mid;
 
     @Column(nullable = false)
     private int writer;
@@ -37,17 +45,21 @@ public class UserMatching extends BaseTimeEntity {
     private char evaluation_check;
 
     @Builder
-    public UserMatching(Users user, Matching matching, int writer, char matching_check, char evaluation_check){
+    public UserMatching(Users user, Matching matching,
+                        String nickname, int mid,
+                        int writer, char matching_check, char evaluation_check){
         this.user =user;
         this.matching=matching;
+        this.nickname=nickname;
+        this.mid = mid;
         this.writer = writer;
         this.matching_check=matching_check;
         this.evaluation_check=evaluation_check;
     }
 
-//    public void update(char matching_check, char evaluation_check){
-//        this.matching_check = matching_check;
-//        this.evaluation_check = evaluation_check;
-//    }
+    public void update(char matching_check, char evaluation_check){
+        this.matching_check = matching_check;
+        this.evaluation_check = evaluation_check;
+    }
 
 }

@@ -8,6 +8,8 @@ import com.hibit.kusitms26tht3hibitback.dto.UserMatchingUpdateDto;
 import com.hibit.kusitms26tht3hibitback.service.MatchingService;
 import com.hibit.kusitms26tht3hibitback.service.UserMatchingService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
@@ -26,7 +28,8 @@ import java.util.Map;
 public class UserMatchingController {
     private final UserMatchingService userMatchingService;
 
-
+    @Parameters({@Parameter(name = "matching_check",description="매칭 수락 여부",example = "Y"),
+            @Parameter(name = "evaluation_check",description="평가 여부",example = "W")})
 
     @GetMapping("{idx}/application")
     @Operation(summary = "matching/{idx}/application", description = "매칭메이트 신청")
@@ -45,6 +48,7 @@ public class UserMatchingController {
         }
         return response;
     }
+
     @GetMapping("{idx}/participants")
     @Operation(summary = "matching/{idx}/participants", description = "매칭디테일 참여자 정보")
     public List<UserMatchingResponseDto> findByMatching(@PathVariable int idx){
