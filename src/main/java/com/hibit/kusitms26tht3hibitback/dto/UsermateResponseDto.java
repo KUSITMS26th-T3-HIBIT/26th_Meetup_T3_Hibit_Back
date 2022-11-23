@@ -11,6 +11,7 @@ import java.util.List;
 
 public class UsermateResponseDto {
     private int idx;
+    private String id;
     private String nickname;
     private String home;
     private boolean gender;
@@ -22,6 +23,7 @@ public class UsermateResponseDto {
 
     public UsermateResponseDto(Users entity){
         this.idx = entity.getIdx();
+        this.id = entity.getId();
         this.nickname = entity.getNickname();
         this.home = entity.getHome();
         this.gender = entity.isGender();
