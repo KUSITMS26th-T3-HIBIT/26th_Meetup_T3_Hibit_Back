@@ -94,7 +94,15 @@ public class UserController {
 
         return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
     }
-    
+
+    @Operation(summary = "마이페이지 - 유저 정보 조회")
+    @GetMapping("/profile/{id}")
+    public Users getUserDetails(@PathVariable String id){
+        Optional<Users> user = userRepository.findById(id);
+
+        return user.get();
+    }
+
     @Operation(summary = "마이페이지 - 유저 정보 수정")
     @PutMapping("/profile/update/{id}")
     public String update(@Parameter(name = "id", description = "user 의 id", in = ParameterIn.PATH) @PathVariable String id, @RequestBody ProfileUpdateDto profileUpdateDto){
