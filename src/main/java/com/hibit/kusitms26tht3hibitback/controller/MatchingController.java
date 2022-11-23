@@ -3,10 +3,7 @@ package com.hibit.kusitms26tht3hibitback.controller;
 
 import com.hibit.kusitms26tht3hibitback.domain.Matching;
 import com.hibit.kusitms26tht3hibitback.domain.Users;
-import com.hibit.kusitms26tht3hibitback.dto.MatchingResponseDto;
-import com.hibit.kusitms26tht3hibitback.dto.MatchingSaveRequestDto;
-import com.hibit.kusitms26tht3hibitback.dto.MatchingUpdateRequestDto;
-import com.hibit.kusitms26tht3hibitback.dto.UsermateResponseDto;
+import com.hibit.kusitms26tht3hibitback.dto.*;
 import com.hibit.kusitms26tht3hibitback.global.util.SecurityUtil;
 import com.hibit.kusitms26tht3hibitback.repository.MatchingRepository;
 import com.hibit.kusitms26tht3hibitback.repository.UserRepository;
@@ -30,14 +27,11 @@ import java.util.Optional;
 @Tag(name="matching", description = "매칭 API")
 @RestController
 @RequestMapping("/matching")
-
+@RequiredArgsConstructor
 public class MatchingController {
 
-    @Autowired
-    private MatchingService matchingService;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final MatchingService matchingService;
 
 
     @PostMapping("/post")
@@ -47,7 +41,7 @@ public class MatchingController {
     @Parameters({@Parameter(name = "title",description="제목",example = "전시회보러가요"),
             @Parameter(name = "exhibition",description="전시회이름",example = "디뮤지엄 어쩌다 사랑"),
             @Parameter(name = "content",description="내용",example = "전시회 처음 보러가는데,~~~~"),
-            @Parameter(name = "category",description="전시카테고리",example = "1"),
+            @Parameter(name = "area",description="지역",example = "서울 강남구"),
             @Parameter(name = "number",description="명수",example = "2"),
             @Parameter(name = "start_date",description="시작 날짜",example = "2022-11-15"),
             @Parameter(name = "finish_date",description="마감 날짜",example = "2022-11-19"),
@@ -84,6 +78,7 @@ public class MatchingController {
     {
         return matchingService.findUserById(idx);
     }
+
 
 
 
