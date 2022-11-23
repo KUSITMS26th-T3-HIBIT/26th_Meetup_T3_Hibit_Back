@@ -6,14 +6,18 @@ import com.hibit.kusitms26tht3hibitback.domain.Users;
 import com.hibit.kusitms26tht3hibitback.dto.MatchingResponseDto;
 import com.hibit.kusitms26tht3hibitback.dto.UserMatchingResponseDto;
 import com.hibit.kusitms26tht3hibitback.dto.UserMatchingSaveDto;
+import com.hibit.kusitms26tht3hibitback.dto.UserMatchingUpdateDto;
 import com.hibit.kusitms26tht3hibitback.repository.MatchingRepository;
 import com.hibit.kusitms26tht3hibitback.repository.UserMatchingRepository;
+import com.hibit.kusitms26tht3hibitback.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.graalvm.compiler.nodes.calc.IntegerDivRemNode;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -21,7 +25,7 @@ import java.util.stream.Collectors;
 public class UserMatchingService {
     private final UserMatchingRepository userMatchingRepository;
     private final MatchingRepository matchingRepository;
-
+    private final UserRepository userRepository;
     public Matching findMatchingById(int idx){
         Matching entity = matchingRepository.findById(idx).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id="+idx));
         return entity;
@@ -46,5 +50,19 @@ public class UserMatchingService {
         userMatchingRepository.save(userMatching);
         return userMatching.getIdx();
     }
+
+//    @Transactional
+//    public UserMatching update(int idx, String nickname, UserMatchingUpdateDto userMatchingUpdateDto){
+//        Matching matching = matchingRepository.findById(idx).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id="+idx));
+//        Users user = userRepository.findByNickname(nickname);
+//
+//        Sort sort = Sort.by(Sort.Direction.DESC, "createdDate");
+//        List<UserMatching> list = userMatchingRepository.findByMatching(matching, sort);
+
+//        UserMatching userMatching = userMatchingRepository.findByMatchingAndUser(matching, user).orElseThrow(()-> new IllegalArgumentException("해당 신청이 없습니다."));;
+//        userMatching.update(userMatchingUpdateDto.getMatching_check(),
+//                userMatchingUpdateDto.getEvaluation_check());
+//        return userMatching;
+//    }
 
 }

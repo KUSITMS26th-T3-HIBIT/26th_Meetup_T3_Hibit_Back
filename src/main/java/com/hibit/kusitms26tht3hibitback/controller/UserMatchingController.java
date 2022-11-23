@@ -1,18 +1,19 @@
 package com.hibit.kusitms26tht3hibitback.controller;
 
 import com.hibit.kusitms26tht3hibitback.domain.Matching;
+import com.hibit.kusitms26tht3hibitback.domain.UserMatching;
 import com.hibit.kusitms26tht3hibitback.domain.Users;
 import com.hibit.kusitms26tht3hibitback.dto.UserMatchingResponseDto;
+import com.hibit.kusitms26tht3hibitback.dto.UserMatchingUpdateDto;
 import com.hibit.kusitms26tht3hibitback.service.MatchingService;
 import com.hibit.kusitms26tht3hibitback.service.UserMatchingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.parameters.P;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -47,13 +48,13 @@ public class UserMatchingController {
     @GetMapping("{idx}/participants")
     @Operation(summary = "matching/{idx}/participants", description = "매칭디테일 참여자 정보")
     public List<UserMatchingResponseDto> findByMatching(@PathVariable int idx){
-
         Matching matching = userMatchingService.findMatchingById(idx);
         return userMatchingService.findByMatching(matching);
     }
 
-
-
-
-
+    @PutMapping("{idx}/participants")
+    @Operation(summary = "matching/{idx}/participants", description = "수락/거절/평가")
+    public UserMatching update(@PathVariable int idx, @RequestParam String nickname, @RequestBody UserMatchingUpdateDto userMatchingUpdateDto){
+        return userMatchingService.update(idx, nickname, userMatchingUpdateDto);
+    }
 }

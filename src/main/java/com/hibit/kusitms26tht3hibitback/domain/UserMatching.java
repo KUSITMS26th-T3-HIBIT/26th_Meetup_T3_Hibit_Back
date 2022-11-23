@@ -45,7 +45,9 @@ public class UserMatching extends BaseTimeEntity {
         this.evaluation_check=evaluation_check;
     }
 
-    public void accept() {this.matching_check = 'Y';}
-    public void refuse() {this.matching_check = 'N';}
+//    public void update(char matching_check, char evaluation_check){
+//        this.matching_check = matching_check;
+//        this.evaluation_check = evaluation_check;
+//    }
 
 }

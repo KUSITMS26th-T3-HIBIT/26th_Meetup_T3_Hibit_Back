@@ -15,7 +15,6 @@ public class UserMatchingResponseDto {
     private char matching_check;
     private char evaluation_check;
 
-
     public UserMatchingResponseDto(UserMatching entity){
         this.idx = entity.getIdx();
         this.user = entity.getUser().getNickname();

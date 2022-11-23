@@ -22,4 +22,5 @@ public class UserService {
     public boolean existNickname(String nickname){
         return userRepository.existsByNickname(nickname);
     }
+
 }
