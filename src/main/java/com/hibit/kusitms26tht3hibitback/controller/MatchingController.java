@@ -7,25 +7,19 @@ import com.hibit.kusitms26tht3hibitback.dto.MatchingResponseDto;
 import com.hibit.kusitms26tht3hibitback.dto.MatchingSaveRequestDto;
 import com.hibit.kusitms26tht3hibitback.dto.MatchingUpdateRequestDto;
 import com.hibit.kusitms26tht3hibitback.dto.UsermateResponseDto;
-import com.hibit.kusitms26tht3hibitback.global.util.SecurityUtil;
-import com.hibit.kusitms26tht3hibitback.repository.MatchingRepository;
 import com.hibit.kusitms26tht3hibitback.repository.UserRepository;
 import com.hibit.kusitms26tht3hibitback.service.MatchingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
-import org.hibernate.procedure.spi.ParameterRegistrationImplementor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @Tag(name="matching", description = "매칭 API")
 @RestController
@@ -99,5 +93,9 @@ public class MatchingController {
         return matchingService.delete(idx);
     }
 
+    @GetMapping("/search/{keyword}")
+    public List<MatchingResponseDto> searchMatching(@Parameter(name = "keyword", description = "검색 키워드", in = ParameterIn.PATH)@PathVariable String keyword) {
+        return matchingService.searchMatching(keyword);
+    }
 }
 

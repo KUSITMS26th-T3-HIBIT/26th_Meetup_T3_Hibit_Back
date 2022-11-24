@@ -1,5 +1,6 @@
 package com.hibit.kusitms26tht3hibitback.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hibit.kusitms26tht3hibitback.BaseTimeEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -22,6 +23,7 @@ public class Matching extends BaseTimeEntity {
     private int idx;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "user_idx")
     private Users user;
 

@@ -13,4 +13,6 @@ public interface MatchingRepository extends JpaRepository<Matching, Integer> {
     List<Matching> findALlByDeleteYn(final char deleteYn, final Sort sort);
 
     List<Matching> findByUser_IdContaining(String id);
+
+    List<Matching> findByTitleContaining(String keyword);
 }
