@@ -12,5 +12,6 @@ import java.util.List;
 public interface UserMatchingRepository extends JpaRepository<UserMatching, Integer> {
     List<UserMatching> findByMatching(Matching matching, final Sort sort);
     UserMatching findByMidAndNickname(int matchingId, String nickname);
+    boolean existsByNickname(String nickname);
 
 }

@@ -1,46 +1,48 @@
 package com.hibit.kusitms26tht3hibitback.dto;
 
 import com.hibit.kusitms26tht3hibitback.domain.Matching;
-import com.hibit.kusitms26tht3hibitback.domain.UserMatching;
+import com.hibit.kusitms26tht3hibitback.domain.Rating;
 import com.hibit.kusitms26tht3hibitback.domain.Users;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @Getter
-public class UserMatchingSaveDto {
+public class RatingSaveRequestDto {
     private Users user;
     private Matching matching;
     private String nickname;
     private int mid;
-    private int writer;
-    @Schema(description = "수락 여부", example = "W")
-    private char matching_check;
-    @Schema(description = "평가 여부", example = "W")
-    private char evaluation_check;
+    private double avg;
+    private int question1;
+    private int question2;
+    private List<Integer> tag;
 
     @Builder
-    public UserMatchingSaveDto(Users users, Matching matching,String nickname, int mid, int writer, char matching_check,char evaluation_check){
-        this.user=users;
+    public RatingSaveRequestDto(Users user, Matching matching, String nickname,
+                                int mid, double avg, int question2, int question1, List<Integer> tag){
+        this.user=user;
         this.matching=matching;
         this.nickname=nickname;
         this.mid=mid;
-        this.writer= writer;
-        this.matching_check=matching_check;
-        this.evaluation_check=evaluation_check;
+        this.avg=avg;
+        this.question1=question1;
+        this.question2=question2;
+        this.tag=tag;
     }
-
-    public UserMatching toEntity(){
-        return UserMatching.builder()
+    public Rating toEntity() {
+        return Rating.builder()
                 .user(user)
                 .matching(matching)
                 .nickname(nickname)
                 .mid(mid)
-                .writer(writer)
-                .matching_check(matching_check)
-                .evaluation_check(evaluation_check)
+                .avg(avg)
+                .question1(question1)
+                .question2(question2)
+                .tag(tag)
                 .build();
     }
 
@@ -52,6 +54,6 @@ public class UserMatchingSaveDto {
     }
     public void setUserNickname(Users user) {this.nickname = user.getNickname();}
     public void setMatchingId(Matching matching) {this.mid = matching.getIdx();}
-    public void setWriter() {this.writer = matching.getIdx();}
+    public void setAvg(){this.avg=(this.question1+this.question2)/2;}
 
 }

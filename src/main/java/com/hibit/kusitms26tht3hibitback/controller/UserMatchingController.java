@@ -3,7 +3,9 @@ package com.hibit.kusitms26tht3hibitback.controller;
 import com.hibit.kusitms26tht3hibitback.domain.Matching;
 import com.hibit.kusitms26tht3hibitback.domain.UserMatching;
 import com.hibit.kusitms26tht3hibitback.domain.Users;
+import com.hibit.kusitms26tht3hibitback.dto.MatchingSaveRequestDto;
 import com.hibit.kusitms26tht3hibitback.dto.UserMatchingResponseDto;
+import com.hibit.kusitms26tht3hibitback.dto.UserMatchingSaveDto;
 import com.hibit.kusitms26tht3hibitback.dto.UserMatchingUpdateDto;
 import com.hibit.kusitms26tht3hibitback.service.MatchingService;
 import com.hibit.kusitms26tht3hibitback.service.UserMatchingService;
@@ -31,9 +33,9 @@ public class UserMatchingController {
     @Parameters({@Parameter(name = "matching_check",description="매칭 수락 여부",example = "Y"),
             @Parameter(name = "evaluation_check",description="평가 여부",example = "W")})
 
-    @GetMapping("{idx}/application")
+    @PostMapping("{idx}/application")
     @Operation(summary = "matching/{idx}/application", description = "매칭메이트 신청")
-    public Map<String, Object> saveUserMatching(@PathVariable int idx, Authentication authentication){
+    public Map<String, Object> saveUserMatching(@PathVariable int idx, @RequestBody UserMatchingSaveDto requestDto, Authentication authentication){
         //중복 신청 검사는 아직 안함..
         Matching matching = userMatchingService.findMatchingById(idx);
         Users user = (Users) authentication.getPrincipal();
@@ -42,18 +44,48 @@ public class UserMatchingController {
             response.put("result", "자신이 쓴 글은 신청할 수 없습니다.");
         }
         else{
-            //이 경우에 알림 요청하는거 추가해야함
-            idx = userMatchingService.saveUserMatching(user, matching);
-            response.put("idx",idx);
+            if(userMatchingService.existsByNickname(user.getNickname())==false){
+                UserMatching userMatching;
+                //이 경우에 알림 요청하는거 추가해야함
+                userMatching = userMatchingService.saveUserMatching(requestDto, user, matching);
+                response.put("idx",userMatching);
+            }
+            else{
+                response.put("result", "이미 신청한 글입니다.");
+            }
         }
         return response;
     }
 
+//    @GetMapping("{idx}/participants")
+//    @Operation(summary = "matching/{idx}/participants", description = "매칭디테일 참여자 정보")
+//    public List<UserMatchingResponseDto> findByMatching(@PathVariable int idx, Authentication authentication){
+//        Matching matching = userMatchingService.findMatchingById(idx);
+//        Users user = (Users) authentication.getPrincipal();
+//        if (matching.getUser().getIdx() == user.getIdx()) {
+//            return userMatchingService.findByMatching(matching);
+//        }
+//        else{
+//            // 아직...
+//        }
+//    }
+
+
     @GetMapping("{idx}/participants")
     @Operation(summary = "matching/{idx}/participants", description = "매칭디테일 참여자 정보")
-    public List<UserMatchingResponseDto> findByMatching(@PathVariable int idx){
+    public Map<String, Object> findByMatching(@PathVariable int idx, Authentication authentication){
         Matching matching = userMatchingService.findMatchingById(idx);
-        return userMatchingService.findByMatching(matching);
+        Users user = (Users) authentication.getPrincipal();
+        Map<String, Object> response = new HashMap<>();
+
+        if (matching.getUser().getIdx() == user.getIdx()) {
+            List list = userMatchingService.findByMatching(matching);
+            response.put("List", list);
+        }
+        else{
+            response.put("result", "작성한 유저가 아닙니다.");
+        }
+        return response;
     }
 
     @PutMapping("{idx}/participants")
