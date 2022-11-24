@@ -76,10 +76,10 @@ public class UserMatchingController {
 
     @PutMapping("{idx}/participants")
     @Operation(summary = "matching/{idx}/participants", description = "수락/거절/평가")
-    public int update(@PathVariable int idx, @RequestParam String nickname, @RequestBody UserMatchingUpdateDto userMatchingUpdateDto){
+    public char update(@PathVariable int idx, @RequestParam String nickname, @RequestBody UserMatchingUpdateDto userMatchingUpdateDto){
         UserMatching userMatching;
         userMatching = userMatchingService.update(idx, nickname, userMatchingUpdateDto);
         alarmService.saveMatchingTF(nickname, idx);
-        return idx;
+        return userMatching.getMatching_check();
     }
 }
