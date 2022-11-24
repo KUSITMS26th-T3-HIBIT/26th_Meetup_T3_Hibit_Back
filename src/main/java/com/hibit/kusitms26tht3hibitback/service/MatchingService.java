@@ -77,10 +77,15 @@ public class MatchingService {
         return new UsermateResponseDto(Mate);
     }
 
-    /* search */
     @Transactional
     public List<Matching> search(String id) {
         List<Matching> matchingList = matchingRepository.findByUser_IdContaining(id);
         return matchingList;
+    }
+
+    @Transactional
+    public List<MatchingResponseDto> searchMatching(String keyword) {
+        List<Matching> searchingList = matchingRepository.findByTitleContaining(keyword);
+        return searchingList.stream().map(MatchingResponseDto::new).collect(Collectors.toList());
     }
 }
