@@ -52,8 +52,6 @@ public class UserMatchingSaveDto {
     }
     public void setUserNickname(Users user) {this.nickname = user.getNickname();}
     public void setMatchingId(Matching matching) {this.mid = matching.getIdx();}
-    public void setAccept() {this.matching_check = 'W';}
-    public void setEvaluation_check() {this.evaluation_check = 'W';}
     public void setWriter() {this.writer = matching.getIdx();}
 
 }

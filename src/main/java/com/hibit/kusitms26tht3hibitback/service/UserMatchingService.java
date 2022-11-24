@@ -11,6 +11,7 @@ import com.hibit.kusitms26tht3hibitback.repository.MatchingRepository;
 import com.hibit.kusitms26tht3hibitback.repository.UserMatchingRepository;
 import com.hibit.kusitms26tht3hibitback.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -36,19 +37,20 @@ public class UserMatchingService {
         return list.stream().map(UserMatchingResponseDto::new).collect(Collectors.toList());
     }
 
+    public boolean existsByNickname(String nickname){
+        return userMatchingRepository.existsByNickname(nickname);
+    }
+
     @Transactional
-    public int saveUserMatching(Users user, Matching matching){
-        UserMatchingSaveDto userMatchingSaveDto = new UserMatchingSaveDto();
+    public UserMatching saveUserMatching(UserMatchingSaveDto userMatchingSaveDto, Users user, Matching matching){
         userMatchingSaveDto.setUser(user);
         userMatchingSaveDto.setMatching(matching);
         userMatchingSaveDto.setUserNickname(user);
         userMatchingSaveDto.setMatchingId(matching);
-        userMatchingSaveDto.setAccept();
-        userMatchingSaveDto.setEvaluation_check();
         userMatchingSaveDto.setWriter();
         UserMatching userMatching = userMatchingSaveDto.toEntity();
         userMatchingRepository.save(userMatching);
-        return userMatching.getIdx();
+        return userMatching;
     }
 
     @Transactional
