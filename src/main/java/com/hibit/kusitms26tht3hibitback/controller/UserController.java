@@ -1,13 +1,14 @@
 package com.hibit.kusitms26tht3hibitback.controller;
 
 import com.hibit.kusitms26tht3hibitback.domain.Users;
+import com.hibit.kusitms26tht3hibitback.dto.ProfileResponseDto;
+import com.hibit.kusitms26tht3hibitback.dto.ProfileUpdateDto;
 import com.hibit.kusitms26tht3hibitback.global.jwt.JwtTokenProvider;
 import com.hibit.kusitms26tht3hibitback.repository.UserRepository;
 import com.hibit.kusitms26tht3hibitback.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,12 +39,16 @@ public class UserController {
     @Operation(summary = "signup", description = "회원가입")
     @Parameters({@Parameter(name = "id",description="아이디",example = "arin123"),
             @Parameter(name = "password",description="비밀번호",example = "1234"),
-            @Parameter(name = "nickname",description="닉네임",example = "이아린"),
+            @Parameter(name = "name",description="이름",example = "이아린"),
+            @Parameter(name = "nickname",description="닉네임",example = "아린"),
             @Parameter(name = "phone_number",description="전화번호",example = "01011112222"),
-            @Parameter(name = "age",description="나이",example = "24"),
+            @Parameter(name = "birth",description="생년월일",example = "20001123"),
             @Parameter(name = "gender",description="성별",example = "True"),
             @Parameter(name = "home",description="주소",example = "경기도"),
-            @Parameter(name = "introduce",description="자기 소개",example = "안녕하세요.")})
+            @Parameter(name = "introduce",description="자기 소개",example = "안녕하세요."),
+            @Parameter(name = "style",description="비밀번호"),
+            @Parameter(name = "personality",description="성격"),
+            @Parameter(name = "hobby",description="취미")})
     @RequestMapping(method = RequestMethod.POST, path = "/sign-up")
     public Users register(@RequestBody Users users) {
 
@@ -95,11 +100,18 @@ public class UserController {
         return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
     }
 
-    @PutMapping("/profile/{id}")
-    public Users getUserDetails(@PathVariable String id){
-        Optional<Users> user = userRepository.findById(id);
+    @Operation(summary = "마이페이지 - 유저 정보 조회")
+    @GetMapping("/profile/{id}")
+    public ProfileResponseDto getUserDetails(@Parameter(name = "id", description = "user 의 id", in = ParameterIn.PATH)@PathVariable String id){
 
-        return user.get();
+        return userService.findUserProfile(id);
     }
+
+    @Operation(summary = "마이페이지 - 유저 정보 수정")
+    @PutMapping("/profile/update/{id}")
+    public String update(@Parameter(name = "id", description = "user 의 id", in = ParameterIn.PATH) @PathVariable String id, @RequestBody ProfileUpdateDto profileUpdateDto){
+        return userService.update(id,profileUpdateDto);
+    }
+
 
 }

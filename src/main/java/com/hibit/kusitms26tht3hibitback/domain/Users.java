@@ -38,6 +38,10 @@ public class Users implements UserDetails {
     private String password;
 
     @Column(nullable = false, length = 20)
+    @Schema(description = "이름", example = "히빗어쩌구")
+    private String name;
+
+    @Column(nullable = false, length = 20)
     @Schema(description = "닉네임", example = "아린")
     private String nickname;
 
@@ -58,7 +62,7 @@ public class Users implements UserDetails {
     private String email;
 
     @Column(nullable = true)
-    private double temperature;
+    private double temperature=36.6;
 
     @Column(nullable = false, length = 50)
     @Schema(description = "거주지", example = "경기도")
@@ -128,4 +132,19 @@ public class Users implements UserDetails {
     public void setRoles(String role_user) {
         this.roles = Collections.singletonList(role_user);
     }
+
+    public void update(String password, String nickname, String phone_number, String birth, boolean gender, String email, String home, String introduce, int style, List<Integer> personality, List<Integer> hobby){
+        this.password = password;
+        this.nickname = nickname;
+        this.phone_number = phone_number;
+        this.birth = birth;
+        this.gender = gender;
+        this.email = email;
+        this.home = home;
+        this.introduce = introduce;
+        this.style = style;
+        this.personality = personality;
+        this.hobby = hobby;
+    }
+
 }

@@ -3,6 +3,7 @@ package com.hibit.kusitms26tht3hibitback.service;
 import com.hibit.kusitms26tht3hibitback.domain.Matching;
 import com.hibit.kusitms26tht3hibitback.domain.Posts;
 import com.hibit.kusitms26tht3hibitback.domain.Users;
+import com.hibit.kusitms26tht3hibitback.dto.MatchingResponseDto;
 import com.hibit.kusitms26tht3hibitback.dto.PostResponseDto;
 import com.hibit.kusitms26tht3hibitback.dto.PostUpdateRequestDto;
 import com.hibit.kusitms26tht3hibitback.dto.PostsSaveRequestDto;
@@ -60,5 +61,18 @@ public class PostsService {
         entity.delete();
         return idx;
     }
+
+    @Transactional
+    public List<Posts> search(String id) {
+        List<Posts> postsList = postsRepository.findByUser_IdContaining(id);
+        return postsList;
+    }
+
+    @Transactional
+    public List<PostResponseDto> searchMatching(String keyword) {
+        List<Posts> searchingList = postsRepository.findByTitleContaining(keyword);
+        return searchingList.stream().map(PostResponseDto::new).collect(Collectors.toList());
+    }
+
 
 }

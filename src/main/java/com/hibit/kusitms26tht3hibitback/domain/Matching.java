@@ -1,5 +1,6 @@
 package com.hibit.kusitms26tht3hibitback.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hibit.kusitms26tht3hibitback.BaseTimeEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -22,6 +23,7 @@ public class Matching extends BaseTimeEntity {
     private int idx;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "user_idx")
     private Users user;
 
@@ -37,9 +39,9 @@ public class Matching extends BaseTimeEntity {
     @Schema(description = "내용", example = "장 줄리앙의 첫 회고전이자, 저의 첫 매칭~~")
     private String content;
 
-    @Column(nullable = false, length = 1)
-    @Schema(description = "전시 카테고리", example = "1")
-    private int category;
+    @Column(nullable = false, length = 20)
+    @Schema(description = "지역", example = "서울강남구")
+    private String area;
 
     @Column(nullable = false, length = 1)
     @Schema(description = "인원수", example = "2")
@@ -73,14 +75,14 @@ public class Matching extends BaseTimeEntity {
     private char deleteYn;
 
     @Builder
-    public Matching(Users user, String title, String exhibition, String content, int category, int number,
+    public Matching(Users user, String title, String exhibition, String content, String area, int number,
                     LocalDate start_date,LocalDate finish_date,
                     boolean finish, int view, String openchat, String want, char deleteYn) {
         this.user = user;
         this.title = title;
         this.exhibition = exhibition;
         this.content = content;
-        this.category = category;
+        this.area = area;
         this.number = number;
         this.start_date = start_date;
         this.finish_date = finish_date;
@@ -91,13 +93,13 @@ public class Matching extends BaseTimeEntity {
         this.deleteYn= deleteYn;
     }
 
-    public void update(String title, String exhibition, String content, int category, int number,
+    public void update(String title, String exhibition, String content, String area, int number,
                        LocalDate start_date, LocalDate finish_date,
                        String openchat, String want) {
         this.title = title;
         this.exhibition = exhibition;
         this.content = content;
-        this.category = category;
+        this.area = area;
         this.number = number;
         this.start_date = start_date;
         this.finish_date = finish_date;

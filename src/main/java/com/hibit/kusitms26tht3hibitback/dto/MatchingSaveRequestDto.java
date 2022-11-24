@@ -21,8 +21,8 @@ public class MatchingSaveRequestDto {
     private String exhibition;
     @Schema(description = "내용", example = "장 줄리앙의 첫 회고전이자, 저의 첫 매칭~~")
     private String content;
-    @Schema(description = "전시 카테고리", example = "1")
-    private int category;
+    @Schema(description = "지역", example = "서울 강남구")
+    private String area;
     @Schema(description = "인원수", example = "2")
     private int number;
     @Schema(description = "시작 날짜", example = "2022-11-10")
@@ -39,13 +39,13 @@ public class MatchingSaveRequestDto {
 
     @Builder
     public MatchingSaveRequestDto(Users user, String title, String exhibition, String content,
-                                  int category, int number, LocalDate start_date, LocalDate finish_date,
+                                  String area, int number, LocalDate start_date, LocalDate finish_date,
                                   String openchat, String want, char deleteYn){
         this.user = user;
         this.title=title;
         this.exhibition=exhibition;
         this.content=content;
-        this.category = category;
+        this.area = area;
         this.number=number;
         this.start_date=start_date;
         this.finish_date=finish_date;
@@ -61,7 +61,7 @@ public class MatchingSaveRequestDto {
                 .title(title)
                 .exhibition(exhibition)
                 .content(content)
-                .category(category)
+                .area(area)
                 .number(number)
                 .start_date(start_date)
                 .finish_date(finish_date)

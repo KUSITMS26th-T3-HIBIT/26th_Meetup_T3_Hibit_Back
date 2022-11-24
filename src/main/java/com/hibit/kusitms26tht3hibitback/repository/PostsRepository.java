@@ -10,4 +10,9 @@ import java.util.List;
 public interface PostsRepository extends JpaRepository<Posts, Integer> {
     List<Posts> findALlByDeleteYn(final char deleteYn, final Sort sort);
 
+    List<Posts> findByUser_IdContaining(String id);
+
+    List<Posts> findByTitleContaining(String keyword);
+
+
 }
