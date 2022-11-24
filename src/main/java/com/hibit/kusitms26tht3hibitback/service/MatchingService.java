@@ -1,6 +1,7 @@
 package com.hibit.kusitms26tht3hibitback.service;
 
 import com.hibit.kusitms26tht3hibitback.domain.Matching;
+import com.hibit.kusitms26tht3hibitback.domain.Posts;
 import com.hibit.kusitms26tht3hibitback.domain.Users;
 import com.hibit.kusitms26tht3hibitback.dto.MatchingResponseDto;
 import com.hibit.kusitms26tht3hibitback.dto.MatchingSaveRequestDto;
@@ -79,5 +80,12 @@ public class MatchingService {
         Matching entity = matchingRepository.findById(idx).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id="+idx));
         Users Mate = entity.getUser();
         return new UsermateResponseDto(Mate);
+    }
+
+    /* search */
+    @Transactional
+    public List<Matching> search(String id) {
+        List<Matching> matchingList = matchingRepository.findByUser_IdContaining(id);
+        return matchingList;
     }
 }

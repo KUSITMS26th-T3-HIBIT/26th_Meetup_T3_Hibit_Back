@@ -1,6 +1,7 @@
 package com.hibit.kusitms26tht3hibitback.controller;
 
 import com.hibit.kusitms26tht3hibitback.domain.Users;
+import com.hibit.kusitms26tht3hibitback.dto.ProfileResponseDto;
 import com.hibit.kusitms26tht3hibitback.dto.ProfileUpdateDto;
 import com.hibit.kusitms26tht3hibitback.global.jwt.JwtTokenProvider;
 import com.hibit.kusitms26tht3hibitback.repository.UserRepository;
@@ -101,10 +102,9 @@ public class UserController {
 
     @Operation(summary = "마이페이지 - 유저 정보 조회")
     @GetMapping("/profile/{id}")
-    public Users getUserDetails(@Parameter(name = "id", description = "user 의 id", in = ParameterIn.PATH)@PathVariable String id){
-        Optional<Users> user = userRepository.findById(id);
+    public ProfileResponseDto getUserDetails(@Parameter(name = "id", description = "user 의 id", in = ParameterIn.PATH)@PathVariable String id){
 
-        return user.get();
+        return userService.findUserProfile(id);
     }
 
     @Operation(summary = "마이페이지 - 유저 정보 수정")
@@ -112,5 +112,6 @@ public class UserController {
     public String update(@Parameter(name = "id", description = "user 의 id", in = ParameterIn.PATH) @PathVariable String id, @RequestBody ProfileUpdateDto profileUpdateDto){
         return userService.update(id,profileUpdateDto);
     }
+
 
 }
