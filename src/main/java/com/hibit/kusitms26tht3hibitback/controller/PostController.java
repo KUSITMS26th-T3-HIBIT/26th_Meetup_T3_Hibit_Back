@@ -1,6 +1,7 @@
 package com.hibit.kusitms26tht3hibitback.controller;
 
 import com.hibit.kusitms26tht3hibitback.domain.Users;
+import com.hibit.kusitms26tht3hibitback.dto.MatchingResponseDto;
 import com.hibit.kusitms26tht3hibitback.dto.PostResponseDto;
 import com.hibit.kusitms26tht3hibitback.dto.PostUpdateRequestDto;
 import com.hibit.kusitms26tht3hibitback.dto.PostsSaveRequestDto;
@@ -8,6 +9,7 @@ import com.hibit.kusitms26tht3hibitback.service.PostsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +63,11 @@ public class PostController {
     @Operation(summary = "community/{idx}", description = "커뮤니티 글 삭제")
     public int delete(@PathVariable int idx){
         return postsService.delete(idx);
+    }
+
+    @GetMapping("/search/{keyword}")
+    public List<PostResponseDto> searchMatching(@Parameter(name = "keyword", description = "검색 키워드", in = ParameterIn.PATH)@PathVariable String keyword) {
+        return postsService.searchMatching(keyword);
+
     }
 }

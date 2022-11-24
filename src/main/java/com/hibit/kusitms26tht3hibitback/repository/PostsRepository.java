@@ -12,5 +12,7 @@ public interface PostsRepository extends JpaRepository<Posts, Integer> {
 
     List<Posts> findByUser_IdContaining(String id);
 
+    List<Posts> findByTitleContaining(String keyword);
+
 
 }

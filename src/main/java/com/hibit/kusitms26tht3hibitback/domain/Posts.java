@@ -1,5 +1,6 @@
 package com.hibit.kusitms26tht3hibitback.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hibit.kusitms26tht3hibitback.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class Posts extends BaseTimeEntity {
     private int idx;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "user_idx")
     private Users user;
 
