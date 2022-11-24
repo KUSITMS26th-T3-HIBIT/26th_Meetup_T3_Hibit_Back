@@ -1,12 +1,11 @@
 package com.hibit.kusitms26tht3hibitback.controller;
 
+import com.hibit.kusitms26tht3hibitback.domain.Alarm;
 import com.hibit.kusitms26tht3hibitback.domain.Matching;
 import com.hibit.kusitms26tht3hibitback.domain.UserMatching;
 import com.hibit.kusitms26tht3hibitback.domain.Users;
-import com.hibit.kusitms26tht3hibitback.dto.MatchingSaveRequestDto;
-import com.hibit.kusitms26tht3hibitback.dto.UserMatchingResponseDto;
-import com.hibit.kusitms26tht3hibitback.dto.UserMatchingSaveDto;
-import com.hibit.kusitms26tht3hibitback.dto.UserMatchingUpdateDto;
+import com.hibit.kusitms26tht3hibitback.dto.*;
+import com.hibit.kusitms26tht3hibitback.service.AlarmService;
 import com.hibit.kusitms26tht3hibitback.service.MatchingService;
 import com.hibit.kusitms26tht3hibitback.service.UserMatchingService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,6 +28,7 @@ import java.util.Map;
 @RestController
 public class UserMatchingController {
     private final UserMatchingService userMatchingService;
+    private final AlarmService alarmService;
 
     @Parameters({@Parameter(name = "matching_check",description="매칭 수락 여부",example = "Y"),
             @Parameter(name = "evaluation_check",description="평가 여부",example = "W")})
@@ -36,7 +36,6 @@ public class UserMatchingController {
     @PostMapping("{idx}/application")
     @Operation(summary = "matching/{idx}/application", description = "매칭메이트 신청")
     public Map<String, Object> saveUserMatching(@PathVariable int idx, @RequestBody UserMatchingSaveDto requestDto, Authentication authentication){
-        //중복 신청 검사는 아직 안함..
         Matching matching = userMatchingService.findMatchingById(idx);
         Users user = (Users) authentication.getPrincipal();
         Map<String, Object> response = new HashMap<>();
@@ -46,8 +45,8 @@ public class UserMatchingController {
         else{
             if(userMatchingService.existsByNickname(user.getNickname())==false){
                 UserMatching userMatching;
-                //이 경우에 알림 요청하는거 추가해야함
                 userMatching = userMatchingService.saveUserMatching(requestDto, user, matching);
+                alarmService.saveMatching(userMatching.getWriter(), idx, user);
                 response.put("idx",userMatching);
             }
             else{
@@ -56,19 +55,6 @@ public class UserMatchingController {
         }
         return response;
     }
-
-//    @GetMapping("{idx}/participants")
-//    @Operation(summary = "matching/{idx}/participants", description = "매칭디테일 참여자 정보")
-//    public List<UserMatchingResponseDto> findByMatching(@PathVariable int idx, Authentication authentication){
-//        Matching matching = userMatchingService.findMatchingById(idx);
-//        Users user = (Users) authentication.getPrincipal();
-//        if (matching.getUser().getIdx() == user.getIdx()) {
-//            return userMatchingService.findByMatching(matching);
-//        }
-//        else{
-//            // 아직...
-//        }
-//    }
 
 
     @GetMapping("{idx}/participants")
@@ -90,7 +76,10 @@ public class UserMatchingController {
 
     @PutMapping("{idx}/participants")
     @Operation(summary = "matching/{idx}/participants", description = "수락/거절/평가")
-    public UserMatching update(@PathVariable int idx, @RequestParam String nickname, @RequestBody UserMatchingUpdateDto userMatchingUpdateDto){
-        return userMatchingService.update(idx, nickname, userMatchingUpdateDto);
+    public int update(@PathVariable int idx, @RequestParam String nickname, @RequestBody UserMatchingUpdateDto userMatchingUpdateDto){
+        UserMatching userMatching;
+        userMatching = userMatchingService.update(idx, nickname, userMatchingUpdateDto);
+        alarmService.saveMatchingTF(nickname, idx);
+        return idx;
     }
 }
