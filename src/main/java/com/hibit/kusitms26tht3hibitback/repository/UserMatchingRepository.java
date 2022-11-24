@@ -8,9 +8,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserMatchingRepository extends JpaRepository<UserMatching, Integer> {
     List<UserMatching> findByMatching(Matching matching, final Sort sort);
     UserMatching findByMidAndNickname(int matchingId, String nickname);
+    Optional<UserMatching> findByMid(int mid);
+    boolean existsByNickname(String nickname);
 
 }
