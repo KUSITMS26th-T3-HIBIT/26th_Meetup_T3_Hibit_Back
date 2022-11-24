@@ -24,8 +24,8 @@ public class MatchingResponseDto {
     private String exhibition;
     @Schema(description = "내용", example = "장 줄리앙의 첫 회고전이자, 저의 첫 매칭~~")
     private String content;
-    @Schema(description = "전시 카테고리", example = "1")
-    private int category;
+    @Schema(description = "지역", example = "서울 강남구")
+    private String area;
     @Schema(description = "인원수", example = "2")
     private int number;
     @Schema(description = "시작 날짜", example = "2022-11-10")
@@ -43,13 +43,17 @@ public class MatchingResponseDto {
     @Schema(description = "게시글 삭제 여부", example = "N")
     private char deleteYn;
 
+    @Schema(description = "전시 관람 스타일", example = "1")
+    private int style;
+
+
     public MatchingResponseDto(@NotNull Matching entity){
         this.idx= entity.getIdx();
         this.user = entity.getUser().getIdx();
         this.title=entity.getTitle();
         this.exhibition= entity.getExhibition();
         this.content= entity.getContent();
-        this.category=entity.getCategory();
+        this.area=entity.getArea();
         this.number= entity.getNumber();
         this.start_date=entity.getStart_date();
         this.finish_date=entity.getFinish_date();
@@ -58,6 +62,7 @@ public class MatchingResponseDto {
         this.openchat=entity.getOpenchat();
         this.want=entity.getWant();
         this.deleteYn = entity.getDeleteYn();
+        this.style=entity.getUser().getStyle();
     }
 
 }
