@@ -62,7 +62,7 @@ public class Users implements UserDetails {
     private String email;
 
     @Column(nullable = true)
-    private double temperature;
+    private double temperature=36.6;
 
     @Column(nullable = false, length = 50)
     @Schema(description = "거주지", example = "경기도")

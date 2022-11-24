@@ -61,4 +61,11 @@ public class PostsService {
         return idx;
     }
 
+    /* search */
+    @Transactional
+    public List<Posts> search(String id) {
+        List<Posts> postsList = postsRepository.findByUser_IdContaining(id);
+        return postsList;
+    }
+
 }
