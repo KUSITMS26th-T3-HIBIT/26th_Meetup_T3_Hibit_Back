@@ -43,6 +43,7 @@ public class UserMatchingSaveDto {
                 .evaluation_check(evaluation_check)
                 .build();
     }
+
     public void setUser(Users user) {
         this.user = user;
     }

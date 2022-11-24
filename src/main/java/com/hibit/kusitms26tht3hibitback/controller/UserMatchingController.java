@@ -49,11 +49,35 @@ public class UserMatchingController {
         return response;
     }
 
+//    @GetMapping("{idx}/participants")
+//    @Operation(summary = "matching/{idx}/participants", description = "매칭디테일 참여자 정보")
+//    public List<UserMatchingResponseDto> findByMatching(@PathVariable int idx, Authentication authentication){
+//        Matching matching = userMatchingService.findMatchingById(idx);
+//        Users user = (Users) authentication.getPrincipal();
+//        if (matching.getUser().getIdx() == user.getIdx()) {
+//            return userMatchingService.findByMatching(matching);
+//        }
+//        else{
+//            // 아직...
+//        }
+//    }
+
+
     @GetMapping("{idx}/participants")
     @Operation(summary = "matching/{idx}/participants", description = "매칭디테일 참여자 정보")
-    public List<UserMatchingResponseDto> findByMatching(@PathVariable int idx){
+    public Map<String, Object> findByMatching(@PathVariable int idx, Authentication authentication){
         Matching matching = userMatchingService.findMatchingById(idx);
-        return userMatchingService.findByMatching(matching);
+        Users user = (Users) authentication.getPrincipal();
+        Map<String, Object> response = new HashMap<>();
+
+        if (matching.getUser().getIdx() == user.getIdx()) {
+            List list = userMatchingService.findByMatching(matching);
+            response.put("List", list);
+        }
+        else{
+            response.put("result", "작성한 유저가 아닙니다.");
+        }
+        return response;
     }
 
     @PutMapping("{idx}/participants")

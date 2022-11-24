@@ -59,4 +59,14 @@ public class UserMatchingService {
                 userMatchingUpdateDto.getEvaluation_check());
         return userMatching;
     }
+//
+//    @Transactional
+//    public UserMatching updateEvaluation(int idx, String nickname, UserMatchingUpdateDto userMatchingUpdateDto){
+//        UserMatching userMatching = userMatchingRepository.findByMidAndNickname(idx,nickname);
+//        char rating = 'T';
+//        userMatchingUpdateDto.setEvaluation_check(rating);
+//        userMatchingRepository.save(userMatching);
+//        return userMatching;
+//    }
+//
 }
