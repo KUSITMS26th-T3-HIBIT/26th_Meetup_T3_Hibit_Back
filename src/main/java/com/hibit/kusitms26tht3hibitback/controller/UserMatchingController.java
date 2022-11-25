@@ -82,4 +82,12 @@ public class UserMatchingController {
         alarmService.saveMatchingTF(nickname, idx);
         return userMatching.getMatching_check();
     }
+
+    @GetMapping("{idx}/participants/detail")
+    @Operation(summary = "matching/{idx}/participants", description = "수락/거절/평가")
+    public char findBynickname(@PathVariable int idx, @RequestParam String nickname){
+        UserMatching userMatching;
+        userMatching = userMatchingService.findByNickname(idx, nickname);
+        return userMatching.getMatching_check();
+    }
 }
