@@ -43,15 +43,19 @@ public class UserMatchingController {
             response.put("result", "자신이 쓴 글은 신청할 수 없습니다.");
         }
         else{
-            if(userMatchingService.existsByNickname(user.getNickname())==false){
-                UserMatching userMatching;
-                userMatching = userMatchingService.saveUserMatching(requestDto, user, matching);
-                alarmService.saveMatching(userMatching.getWriter(), idx, user);
-                response.put("idx",userMatching);
-            }
-            else{
-                response.put("result", "이미 신청한 글입니다.");
-            }
+//            if(userMatchingService.existsByNickname(user.getNickname())==false){
+//                UserMatching userMatching;
+//                userMatching = userMatchingService.saveUserMatching(requestDto, user, matching);
+//                alarmService.saveMatching(userMatching.getWriter(), idx, user);
+//                response.put("idx",userMatching);
+//            }
+//            else{
+//                response.put("result", "이미 신청한 글입니다.");
+//            }
+            UserMatching userMatching;
+            userMatching = userMatchingService.saveUserMatching(requestDto, user, matching);
+            alarmService.saveMatching(userMatching.getWriter(), idx, user);
+            response.put("idx",userMatching);
         }
         return response;
     }
