@@ -27,7 +27,7 @@ public class Matching extends BaseTimeEntity {
     @JoinColumn(name = "user_idx")
     private Users user;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 50)
     @Schema(description = "제목", example = "함께 관람 하실 분 구합니다!")
     private String title;
 
